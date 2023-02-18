@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="428" height="453" viewBox="0 0 428 453">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Retângulo_7" data-name="Retângulo 7" width="428" height="453" transform="translate(0 473)" fill="#fff"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="0.5" y1="0.197" x2="-0.338" y2="2.945" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#404377"/>
+      <stop offset="1" stop-color="#323562"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.5" y1="0.197" x2="-0.338" y2="2.945" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#3f4377"/>
+      <stop offset="1" stop-color="#1a1d4d"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="0.5" y1="0.197" x2="-0.338" y2="2.945" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#1a1c3e"/>
+      <stop offset="1" stop-color="#080a29"/>
+    </linearGradient>
+  </defs>
+  <g id="Grupo_de_máscara_1" data-name="Grupo de máscara 1" transform="translate(0 -473)" clip-path="url(#clip-path)">
+    <g id="Grupo_12184" data-name="Grupo 12184" transform="translate(-1127 -643.918)" opacity="0.314">
+      <path id="Path_2" data-name="Path 2" d="M5.082,66.262S295.416,185,295.55,355.555s229.4,241.234,229.4,241.234L524.481.41,0,0Z" transform="matrix(-0.966, 0.259, -0.259, -0.966, 1671.761, 1589.454)" opacity="0.5" fill="url(#linear-gradient)"/>
+      <path id="Path_2-2" data-name="Path 2" d="M.038,48.852s228.9,116.525,229.031,287.078,190,260.777,190,260.777L418.606.327,0,0Z" transform="matrix(-0.966, 0.259, -0.259, -0.966, 1569.472, 1616.777)" fill="url(#linear-gradient-2)"/>
+      <path id="Path_2-3" data-name="Path 2" d="M.011,13.522s170.566,131.6,170.7,302.155S326.948,596.635,326.948,596.635L326.48.255,0,0Z" transform="matrix(-0.966, 0.259, -0.259, -0.966, 1480.467, 1640.551)" opacity="0.236" fill="url(#linear-gradient-3)"/>
+    </g>
+  </g>
+</svg>

@@ -12,66 +12,87 @@ import Signin from './src/pages/Signin'
 import Signup from './src/pages/Signup'
 import Wallet from './src/pages/Wallet'
 import Service from './src/pages/Service'
+import {
+  useFonts,
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_700Bold,
+} from '@expo-google-fonts/poppins'
+import { GeneralProvider } from './src/contexts/generalContext'
 
 const Stack = createNativeStackNavigator()
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_700Bold,
+  })
+
+  if (!fontsLoaded) {
+    return null
+  }
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="signin">
-        <Stack.Screen
-          name="signin"
-          component={Signin}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="signup"
-          component={Signup}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="pass"
-          component={Password}
-          options={{ headerShown: false }}
-        />
+    <GeneralProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="signin">
+          <Stack.Screen
+            name="signin"
+            component={Signin}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="signup"
+            component={Signup}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="pass"
+            component={Password}
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          name="new"
-          component={NewServices}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="current"
-          component={CurrentServices}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="finished"
-          component={FinishedServices}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="service"
-          component={Service}
-          options={{ headerShown: false }}
-        />
+          <Stack.Screen
+            name="new"
+            component={NewServices}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="current"
+            component={CurrentServices}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="finished"
+            component={FinishedServices}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="service"
+            component={Service}
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          name="chat"
-          component={Chat}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="profile"
-          component={Profile}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="wallet"
-          component={Wallet}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen
+            name="chat"
+            component={Chat}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="profile"
+            component={Profile}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="wallet"
+            component={Wallet}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GeneralProvider>
   )
 }
