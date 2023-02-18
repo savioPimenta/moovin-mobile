@@ -15,7 +15,7 @@ interface ProviderProps {
 }
 
 export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [showSuccessSignup, setShowSuccessSignup] = useState(false)
   
 
