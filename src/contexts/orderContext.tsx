@@ -1,7 +1,16 @@
 import React, { useContext, useState, createContext, useEffect } from 'react'
 import Loading from '../components/Loading'
 import { getHomeOrders } from '../services/order'
+
+// import {
+//   Pusher,
+//   PusherMember,
+//   PusherChannel,
+//   PusherEvent,
+// } from '@pusher/pusher-websocket-react-native';
 import Pusher from 'pusher-js/react-native'
+
+
 
 export interface getNewOrders {
   id: number
@@ -104,38 +113,41 @@ export const OrdersProvider: React.FC<ProviderProps> = ({ children }) => {
     setIsLoading(false)
   }
 
-  // const channels = new Pusher('2d9eb68fbdf6e96af68d', {
-  //   cluster: 'eu',
-  // })
+  const channels = new Pusher('2d9eb68fbdf6e96af68d', {
+    cluster: 'eu',
+  })
 
-  // const initializePusher = () => {
-  //   const channel = channels.subscribe('moovin-realtime')
+  const initializePusher = () => {
+    const channel = channels.subscribe('moovin-realtime')
 
-  //   channel.bind('new-order', (data: getNewOrders[]) => {
-  //     try {
-  //       const obj = { ...response }
-  //       obj.newOrders = obj.newOrders.concat([...data])
-  //       setResponse(obj)
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   })
+    channel.bind('new-order', (data: getNewOrders[]) => {
+      try {
+        const obj = { ...response }
+        obj.newOrders = obj.newOrders.concat([...data])
+        setResponse(obj)
+      } catch (error) {
+        console.log(error)
+      }
+    })
 
-  //   channel.bind('has-new-order', () => {
-  //     try {
-  //       handleGetData()
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   })
+    channel.bind('has-new-order', () => {
+      try {
+        handleGetData()
+      } catch (error) {
+        console.log(error)
+      }
+    })
 
-  //   return channel
-  // }
+    return channel
+  }
 
   useEffect(() => {
-    // const channel = initializePusher()
-    // return channel.unsubscribe()
+    const channel = initializePusher()
+
+    return channel.unsubscribe()
   }, [])
+
+  console.log(response)
 
   useEffect(() => {
     handleGetData()
