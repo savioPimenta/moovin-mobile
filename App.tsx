@@ -6,7 +6,6 @@ import FinishedServices from './src/pages/FinishedServices'
 import Password from './src/pages/Password'
 import Profile from './src/pages/Profile'
 import Signin from './src/pages/Signin'
-import Signup from './src/pages/Signup'
 import Wallet from './src/pages/Wallet'
 import Service from './src/pages/Service'
 import {
@@ -24,6 +23,7 @@ import CustomHeader from './src/components/CustomHeader'
 import { AntDesign } from '@expo/vector-icons'
 import { colors } from './src/lib/colors'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { OrdersProvider } from './src/contexts/orderContext'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -52,25 +52,27 @@ const screenOptions = (route: any, color: any) => {
 function Home() {
   const insets = useSafeAreaInsets()
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color }) => screenOptions(route, color),
-        tabBarActiveTintColor: colors.primary,
-        tabBarLabelStyle: {
-          fontSize: 14,
-        },
-        tabBarStyle: {
-          height: 70 + insets.bottom,
-          paddingTop: 13,
-          paddingBottom: insets.bottom + 7.5,
-        },
-        header: (props) => <CustomHeader props={props}/>,
-      })}
-    >
-      <Tab.Screen name="Home" component={NewServices} />
-      <Tab.Screen name="Finished" component={FinishedServices} />
-      <Tab.Screen name="Wallet" component={Wallet} />
-    </Tab.Navigator>
+    <OrdersProvider>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ color }) => screenOptions(route, color),
+          tabBarActiveTintColor: colors.primary,
+          tabBarLabelStyle: {
+            fontSize: 14,
+          },
+          tabBarStyle: {
+            height: 70 + insets.bottom,
+            paddingTop: 13,
+            paddingBottom: insets.bottom + 7.5,
+          },
+          header: (props) => <CustomHeader props={props} />,
+        })}
+      >
+        <Tab.Screen name="Home" component={NewServices} />
+        <Tab.Screen name="Finished" component={FinishedServices} />
+        <Tab.Screen name="Wallet" component={Wallet} />
+      </Tab.Navigator>
+    </OrdersProvider>
   )
 }
 
@@ -94,11 +96,6 @@ export default function App() {
             <Stack.Screen
               name="signin"
               component={Signin}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="signup"
-              component={Signup}
               options={{ headerShown: false }}
             />
             <Stack.Screen

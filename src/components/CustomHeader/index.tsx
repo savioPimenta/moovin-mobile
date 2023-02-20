@@ -8,9 +8,11 @@ import * as S from './styles'
 import { AntDesign } from '@expo/vector-icons'
 import { MaterialIcons } from '@expo/vector-icons'
 import MyText from '../Text'
+import { useUser } from '../../contexts/userContext'
 
 const CustomHeader: React.FC<{ props: BottomTabHeaderProps }> = ({ props }) => {
   const insets = useSafeAreaInsets()
+  const { user } = useUser()
   return (
     <View
       style={{
@@ -27,10 +29,8 @@ const CustomHeader: React.FC<{ props: BottomTabHeaderProps }> = ({ props }) => {
       />
       <Asset preserveAspectRatio="none" width="100%" />
       <S.Content style={{ top: insets.top }}>
-        <View style={{marginRight: 'auto'}}>
-          <MyText style={{ fontFamily: 'Poppins_700Bold' }}>
-            Hello, Sávio Pimenta!
-          </MyText>
+        <View style={{ marginRight: 'auto' }}>
+          <MyText style={{ fontFamily: 'Poppins_700Bold' }}>Hello, {user?.name.split(' ')[0]}!</MyText>
         </View>
         <S.Button>
           <MaterialIcons name="exit-to-app" size={24} color={colors.white} />

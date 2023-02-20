@@ -16,4 +16,7 @@ export const colors = {
 
   white: '#FFFFFF',
   yellow: '#F8C419',
+
+  border: '#DBDBEB',
+  lightBorder: '#F1F1F1',
 }
