@@ -24,6 +24,7 @@ import { AntDesign } from '@expo/vector-icons'
 import { colors } from './src/lib/colors'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { OrdersProvider } from './src/contexts/orderContext'
+import ProgressServices from './src/pages/ProgressServices'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -37,6 +38,9 @@ const screenOptions = (route: any, color: any) => {
       break
     case 'Finished':
       iconName = 'checkcircleo'
+      break
+    case 'In progress':
+      iconName = 'playcircleo'
       break
     case 'Wallet':
       iconName = 'wallet'
@@ -69,6 +73,7 @@ function Home() {
         })}
       >
         <Tab.Screen name="Home" component={NewServices} />
+        <Tab.Screen name="In progress" component={ProgressServices} />
         <Tab.Screen name="Finished" component={FinishedServices} />
         <Tab.Screen name="Wallet" component={Wallet} />
       </Tab.Navigator>
