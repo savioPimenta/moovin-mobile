@@ -12,9 +12,13 @@ import Button from '../../components/Button'
 import * as WebBrowser from 'expo-web-browser'
 import { PLATFORM_URL } from '@env'
 import { useGeneral } from '../../contexts/generalContext'
+import { useUser } from '../../contexts/userContext'
 
 const Signin: React.FC = () => {
   const [result, setResult] = useState<any>(null)
+  const [email, setEmail] = useState('')
+  const [pass, setPass] = useState('')
+  const { login } = useUser()
   const { setShowSuccessSignup } = useGeneral()
 
   const _handlePressButtonAsync = async () => {
@@ -23,6 +27,22 @@ const Signin: React.FC = () => {
     const res = await WebBrowser.openAuthSessionAsync(url, redirect)
     setResult(res)
     return
+  }
+
+  const handleLogin = async () => {
+    if (email === '' || pass === '') {
+      console.log(
+        'error',
+        'Login failed',
+        'Fill the form with valid credentials'
+      )
+      return
+    }
+
+    const response = await login(email, pass)
+    if (typeof response === 'string') {
+      console.log('error', 'Login failed', response)
+    }
   }
 
   useEffect(() => {
@@ -38,9 +58,19 @@ const Signin: React.FC = () => {
         <S.Form>
           <S.Title>Hello! Please login below</S.Title>
           <View style={{ height: 16 }} />
-          <Input placeholder="Email" />
+          <Input
+            placeholder="Email"
+            value={email}
+            setValue={setEmail}
+            isEmail
+          />
           <View style={{ height: 16 }} />
-          <Input placeholder="Password" isPassword />
+          <Input
+            placeholder="Password"
+            value={pass}
+            setValue={setPass}
+            isPassword
+          />
           <View style={{ height: 16 }} />
           <Pressable
             style={{
@@ -52,7 +82,7 @@ const Signin: React.FC = () => {
             </MyText>
           </Pressable>
           <View style={{ height: 32 }} />
-          <Button>Sign in</Button>
+          <Button onPress={handleLogin}>Sign in</Button>
         </S.Form>
         <View>
           <Pressable onPress={_handlePressButtonAsync}>

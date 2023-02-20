@@ -6,11 +6,20 @@ import { colors } from '../../lib/colors'
 // import { Container } from './styles';
 
 interface InputProps {
+  value: string
+  setValue: React.Dispatch<React.SetStateAction<string>>
   placeholder?: string
   isPassword?: boolean
+  isEmail?: boolean
 }
 
-const Input: React.FC<InputProps> = ({ placeholder, isPassword }) => {
+const Input: React.FC<InputProps> = ({
+  value,
+  setValue,
+  placeholder,
+  isPassword,
+  isEmail
+}) => {
   const [visible, setVisible] = useState(false)
   return (
     <View
@@ -20,10 +29,13 @@ const Input: React.FC<InputProps> = ({ placeholder, isPassword }) => {
       }}
     >
       <TextInput
-        secureTextEntry={visible}
+        value={value}
+        onChangeText={setValue}
+        secureTextEntry={isPassword === true && !visible}
         placeholder={placeholder}
         autoCapitalize="none"
         placeholderTextColor={colors.dark3}
+        keyboardType={isEmail ? 'email-address' : 'default'}
         style={{
           fontFamily: 'Poppins_400Regular',
           paddingHorizontal: 16,
@@ -44,7 +56,7 @@ const Input: React.FC<InputProps> = ({ placeholder, isPassword }) => {
             right: 16,
           }}
         >
-          {visible ? (
+          {!visible ? (
             <AntDesign name="eyeo" size={24} color="white" />
           ) : (
             <AntDesign name="eye" size={24} color="white" />

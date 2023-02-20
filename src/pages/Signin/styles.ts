@@ -10,7 +10,8 @@ export const Container = styled.View`
 `
 
 export const Form = styled.View`
-  margin: 64px;
+  padding: 64px 0;
+  min-width: 100%;
   width: 100%;
   gap: 16px;
   flex: 1;

@@ -15,10 +15,10 @@ const Loading: React.FC = () => {
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#522BCFAA',
+    backgroundColor: '#522BCFC2',
     position: 'absolute',
   }} intensity={8}>
-    {Platform.OS !== 'ios' && <View style={{backgroundColor: '#522BCFaa', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}/>}
+    {Platform.OS !== 'ios' && <View style={{backgroundColor: '#522BCFC2', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}/>}
    <AnimatedLottieView
         onLayout={() => {lottieViewRef.current?.play()}}
         autoPlay

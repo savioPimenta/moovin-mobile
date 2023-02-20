@@ -3,12 +3,13 @@ import React, { useContext, useState, createContext, useEffect } from 'react'
 
 import * as authService from '../services/auth'
 
-import { useGeneral } from './GeneralContext'
+import { useGeneral } from './generalContext'
 
 import { checkExpired, firstToUpper } from '../lib/helpers'
 import api from '../services/api'
 import ModalSubscription from '../components/Modals/SubscriptionExpired'
 import { StackActions, useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export interface User {
   name: string
@@ -47,7 +48,11 @@ interface ContextProps {
 
 export const UserContext = createContext<ContextProps>({} as ContextProps)
 
-export const UserProvider: React.FC = ({ children }: any) => {
+interface ProviderProps {
+  children: React.ReactNode
+}
+
+export const UserProvider: React.FC<ProviderProps> = ({ children }) => {
   const { setIsLoading } = useGeneral()
 
   const [user, setUser] = useState<User | null | undefined>(null)
@@ -63,7 +68,9 @@ export const UserProvider: React.FC = ({ children }: any) => {
     try {
       const { data } = await authService.getUserApi()
       setUser(data.user)
+      navigate.dispatch(StackActions.replace('home'))
     } catch (e: any) {
+      navigate.dispatch(StackActions.replace('signin'))
       console.log(e)
     }
     setIsLoading(false)
@@ -76,7 +83,7 @@ export const UserProvider: React.FC = ({ children }: any) => {
       setIsLoading(false)
 
       if (response.status === 200) {
-        localStorage.setItem('@Moovin:token', response.data.accessToken)
+        await AsyncStorage.setItem('@Moovin:token', response.data.accessToken)
         api.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`
         await getUser()
         navigate.dispatch(StackActions.replace('home'))
@@ -89,10 +96,11 @@ export const UserProvider: React.FC = ({ children }: any) => {
   }
 
   const logout = async () => {
-    localStorage.removeItem('@Moovin:token')
+    await AsyncStorage.removeItem('@Moovin:token')
     delete api.defaults.headers.common.Authorization
     setUser(undefined)
     setUserLoaded(true)
+    navigate.dispatch(StackActions.replace('signin'))
   }
 
   const resetPassword = async (
@@ -104,10 +112,10 @@ export const UserProvider: React.FC = ({ children }: any) => {
     try {
       const response = await authService.resetPassword(email, code, password)
       if (response.status === 200) {
-        localStorage.setItem('@Moovin:token', response.data.accessToken)
+        await AsyncStorage.setItem('@Moovin:token', response.data.accessToken)
         api.defaults.headers.common.Authorization = `Bearer ${response.data.accessToken}`
         await getUser()
-        navigate.dispatch(StackActions.replace('/'))
+        navigate.dispatch(StackActions.replace('home'))
       } else {
         return firstToUpper(response.data.errors[0])
       }
@@ -120,10 +128,12 @@ export const UserProvider: React.FC = ({ children }: any) => {
   useEffect(() => {
     async function loadUserFromCookies() {
       setIsLoading(true)
-      const token = localStorage.getItem('@Moovin:token')
+      const token = await AsyncStorage.getItem('@Moovin:token')
       if (token) {
         api.defaults.headers.common.Authorization = `Bearer ${token}`
         await getUser()
+      } else {
+        navigate.dispatch(StackActions.replace('signin'))
       }
       setUserLoaded(true)
       setIsLoading(false)

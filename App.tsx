@@ -1,10 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native'
-import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import NewServices from './src/pages/NewServices'
 import Chat from './src/pages/Chat'
-import CurrentServices from './src/pages/CurrentServices'
 import FinishedServices from './src/pages/FinishedServices'
 import Password from './src/pages/Password'
 import Profile from './src/pages/Profile'
@@ -20,8 +17,62 @@ import {
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins'
 import { GeneralProvider } from './src/contexts/generalContext'
+import { UserProvider } from './src/contexts/userContext'
+import Loading from './src/components/Loading'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import CustomHeader from './src/components/CustomHeader'
+import { AntDesign } from '@expo/vector-icons'
+import { colors } from './src/lib/colors'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const Stack = createNativeStackNavigator()
+const Tab = createBottomTabNavigator()
+
+const screenOptions = (route: any, color: any) => {
+  let iconName
+
+  switch (route.name) {
+    case 'Home':
+      iconName = 'home'
+      break
+    case 'Finished':
+      iconName = 'checkcircleo'
+      break
+    case 'Wallet':
+      iconName = 'wallet'
+      break
+    default:
+      break
+  }
+
+  // @ts-ignore
+  return <AntDesign name={iconName} color={color} size={24} />
+}
+
+function Home() {
+  const insets = useSafeAreaInsets()
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color }) => screenOptions(route, color),
+        tabBarActiveTintColor: colors.primary,
+        tabBarLabelStyle: {
+          fontSize: 14,
+        },
+        tabBarStyle: {
+          height: 70 + insets.bottom,
+          paddingTop: 13,
+          paddingBottom: insets.bottom + 7.5,
+        },
+        header: (props) => <CustomHeader props={props}/>,
+      })}
+    >
+      <Tab.Screen name="Home" component={NewServices} />
+      <Tab.Screen name="Finished" component={FinishedServices} />
+      <Tab.Screen name="Wallet" component={Wallet} />
+    </Tab.Navigator>
+  )
+}
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -36,63 +87,56 @@ export default function App() {
   }
 
   return (
-    <GeneralProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="signin">
-          <Stack.Screen
-            name="signin"
-            component={Signin}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="signup"
-            component={Signup}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="pass"
-            component={Password}
-            options={{ headerShown: false }}
-          />
+    <NavigationContainer>
+      <GeneralProvider>
+        <UserProvider>
+          <Stack.Navigator initialRouteName="loading">
+            <Stack.Screen
+              name="signin"
+              component={Signin}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="signup"
+              component={Signup}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="pass"
+              component={Password}
+              options={{ headerShown: false }}
+            />
 
-          <Stack.Screen
-            name="new"
-            component={NewServices}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="current"
-            component={CurrentServices}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="finished"
-            component={FinishedServices}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="service"
-            component={Service}
-            options={{ headerShown: false }}
-          />
+            <Stack.Screen
+              name="chat"
+              component={Chat}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="profile"
+              component={Profile}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="service"
+              component={Service}
+              options={{ headerShown: false }}
+            />
 
-          <Stack.Screen
-            name="chat"
-            component={Chat}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="profile"
-            component={Profile}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="wallet"
-            component={Wallet}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </GeneralProvider>
+            <Stack.Screen
+              name="home"
+              component={Home}
+              options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="loading"
+              component={Loading}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </UserProvider>
+      </GeneralProvider>
+    </NavigationContainer>
   )
 }
