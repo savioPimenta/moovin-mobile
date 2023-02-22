@@ -84,52 +84,59 @@ const Service: React.FC<ServiceProps> = ({ route }) => {
     <S.Content>
       <S.Container style={{ ...shadow }}>
         <S.Header>
-          <h1>Service #{response?.code}</h1>
-          <div>
-            {serviceStatusType.find((e) => e.id === response?.status)?.label}
-          </div>
+          <S.HeaderTitle>Order #{response?.code}</S.HeaderTitle>
+          <S.HeaderLabelContainer>
+            <S.HeaderLabel>
+              {serviceStatusType.find((e) => e.id === response?.status)?.label}
+            </S.HeaderLabel>
+          </S.HeaderLabelContainer>
         </S.Header>
-        <S.Body style={{ paddingBottom: 8 }}>
+        <S.Body>
           <S.BodyCard>
-            <span>
+            <S.CardValue>
               {response?.date && format(new Date(response.date), 'dd/MM')}
-            </span>
-            <span>Date</span>
+            </S.CardValue>
+            <S.CardLabel>Date</S.CardLabel>
           </S.BodyCard>
+          <View style={{ width: 16 }} />
           <S.BodyCard>
-            <span>
+            <S.CardValue>
               {response?.date && format(new Date(response.date), 'HH:mm')}
-            </span>
-            <span>Time</span>
+            </S.CardValue>
+            <S.CardLabel>Time</S.CardLabel>
           </S.BodyCard>
           <S.BodyCard>
-            <span>{Math.round(parseFloat(response?.distance || '0'))} km</span>
-            <span>Distance</span>
+            <S.CardValue>
+              {Math.round(parseFloat(response?.distance || '0'))} km
+            </S.CardValue>
+            <S.CardLabel>Distance</S.CardLabel>
           </S.BodyCard>
+          <View style={{ width: 16 }} />
           <S.BodyCard>
-            <span>
+            <S.CardValue>
               {currencyFormatter.format(
                 parseFloat(response?.value || '0') -
                   parseFloat(response?.moovinTax || '0')
               )}
-            </span>
-            <span>Commission</span>
+            </S.CardValue>
+            <S.CardLabel>Commission</S.CardLabel>
           </S.BodyCard>
         </S.Body>
-        <S.Body style={{ paddingTop: 8, paddingBottom: 8 }}>
-          <S.BodyCard isBig>
-            <span>{response?.originDesc}</span>
-            <span>Origin</span>
+        <S.Body>
+          <S.BodyCard>
+            <S.CardValue isBig>{response?.originDesc}</S.CardValue>
+            <S.CardLabel>Origin</S.CardLabel>
           </S.BodyCard>
-          <S.BodyCard isBig>
-            <span>{response?.destinyDesc}</span>
-            <span>Destination</span>
+          <View style={{ width: 16 }} />
+          <S.BodyCard>
+            <S.CardValue isBig>{response?.destinyDesc}</S.CardValue>
+            <S.CardLabel>Destination</S.CardLabel>
           </S.BodyCard>
         </S.Body>
         {response?.type === 2 ? (
-          <S.Body style={{ paddingTop: 8, display: 'flex' }}>
-            <S.BodyCard>
-              <span>Furnitures</span>
+          <S.Body>
+            <S.BodyCard isBig>
+              <S.CardLabel>Furnitures</S.CardLabel>
               <S.FurnitureList>
                 {response?.furnitures.map((item, i) => {
                   const actualFurniture = furnitureItems.find(
@@ -137,43 +144,66 @@ const Service: React.FC<ServiceProps> = ({ route }) => {
                   )
 
                   return (
-                    <div key={i}>
-                      <div>
-                        {actualFurniture?.icon}
-                        <div>{item.qtd}</div>
-                      </div>
-                      <span>{actualFurniture?.label}</span>
-                    </div>
+                    <S.FurnitureContainer key={i}>
+                      <S.FurnitureContent>
+                        <S.FurnitureIcon>
+                          {actualFurniture?.icon &&
+                            React.cloneElement(actualFurniture?.icon, {
+                              fill: colors.white,
+                              width: 28,
+                              height: 28,
+                            })}
+                        </S.FurnitureIcon>
+                        <S.FurnitureQtd>
+                          <MyText
+                            style={{
+                              fontFamily: 'Poppins_700Bold',
+                              color: colors.white,
+                              fontSize: 15
+                            }}
+                          >
+                            {item.qtd}
+                          </MyText>
+                        </S.FurnitureQtd>
+                      </S.FurnitureContent>
+                      <S.FurnitureTitle>
+                        {actualFurniture?.label}
+                      </S.FurnitureTitle>
+                    </S.FurnitureContainer>
                   )
                 })}
               </S.FurnitureList>
             </S.BodyCard>
           </S.Body>
         ) : (
-          <S.Body style={{ paddingTop: 8 }} isIconList>
-            <S.BodyCard>
-              <section>
-                <h1>{response?.rooms}</h1>
-              </section>
-              <span>Rooms</span>
+          <S.Body isIconList>
+            <S.BodyCard isSpec>
+              <S.CardSpecs>
+                <S.SpecsTitle>{response?.rooms}</S.SpecsTitle>
+              </S.CardSpecs>
+              <S.CardLabel>Rooms</S.CardLabel>
             </S.BodyCard>
-            <S.BodyCard>
-              <section style={{ opacity: response?.hasLoad ? 1 : 0.3 }}>
+            <View style={{ width: 16 }} />
+            <S.BodyCard isSpec>
+              <S.CardSpecs style={{ opacity: response?.hasLoad ? 1 : 0.3 }}>
                 <Feather name="box" size={32} color={colors.white} />
-              </section>
-              <span>{!response?.hasLoad ? 'No loading' : 'Has loading'}</span>
+              </S.CardSpecs>
+              <S.CardLabel>
+                {!response?.hasLoad ? 'No loading' : 'Has loading'}
+              </S.CardLabel>
             </S.BodyCard>
-            <S.BodyCard>
-              <section style={{ opacity: response?.hasPackage ? 1 : 0.3 }}>
+            <View style={{ width: 16 }} />
+            <S.BodyCard isSpec>
+              <S.CardSpecs style={{ opacity: response?.hasPackage ? 1 : 0.3 }}>
                 <FontAwesome5
                   name="truck-loading"
                   size={32}
                   color={colors.white}
                 />
-              </section>
-              <span>
+              </S.CardSpecs>
+              <S.CardLabel>
                 {!response?.hasPackage ? 'No packaging' : 'Has packaging'}
-              </span>
+              </S.CardLabel>
             </S.BodyCard>
           </S.Body>
         )}
@@ -181,26 +211,34 @@ const Service: React.FC<ServiceProps> = ({ route }) => {
       <S.Footer>
         {response?.status === 2 && (
           <S.Button secondary onPress={() => setShowRefuse({ code })}>
+            <S.ButtonText secondary>
             Recusar
+            </S.ButtonText>
           </S.Button>
         )}
         {response?.status === 2 && (
           <S.Button
             onPress={() => handleChangeStatus(1, code, navigate, setIsLoading)}
           >
+            <S.ButtonText>
             Aceitar
+            </S.ButtonText>
           </S.Button>
         )}
         {response?.status === 3 && (
           <S.Button secondary onPress={() => code && setShowCancel({ code })}>
+            <S.ButtonText secondary> 
             Cancelar
+            </S.ButtonText>
           </S.Button>
         )}
         {response?.status === 3 && (
           <S.Button
             onPress={() => navigate.dispatch(StackActions.push('chat'))}
           >
+            <S.ButtonText>
             Chat
+            </S.ButtonText>
           </S.Button>
         )}
       </S.Footer>

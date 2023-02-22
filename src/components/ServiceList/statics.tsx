@@ -6,6 +6,7 @@ import Rack from '../../../assets/furniture/rack.svg'
 import Seat from '../../../assets/furniture/seat.svg'
 import SmallBed from '../../../assets/furniture/small-bed.svg'
 import Wardrobe from '../../../assets/furniture/wardrobe.svg'
+import { colors } from '../../lib/colors'
 
 export const regionItems = [
   {
@@ -64,55 +65,55 @@ export const furnitureItems = [
   {
     id: 1,
     label: 'Bed',
-    icon: <Bed />,
+    icon: <Bed fill={colors.dark1} width={20} height={20} />,
     time: 20,
   },
   {
     id: 2,
     label: 'Sofa',
-    icon: <Chair />,
+    icon: <Chair fill={colors.dark1} width={20} height={20} />,
     time: 20,
   },
   {
     id: 3,
     label: 'Desk',
-    icon: <Desk />,
+    icon: <Desk fill={colors.dark1} width={20} height={20} />,
     time: 20,
   },
   {
     id: 4,
     label: 'Table',
-    icon: <Desk />,
+    icon: <Desk fill={colors.dark1} width={20} height={20} />,
     time: 20,
   },
   {
     id: 5,
     label: 'Wardrobe',
-    icon: <Wardrobe />,
+    icon: <Wardrobe fill={colors.dark1} width={20} height={20} />,
     time: 20,
   },
   {
     id: 6,
     label: 'Chair',
-    icon: <Seat />,
+    icon: <Seat fill={colors.dark1} width={20} height={20} />,
     time: 20,
   },
   {
     id: 7,
     label: 'Nightstand',
-    icon: <SmallBed />,
+    icon: <SmallBed fill={colors.dark1} width={20} height={20} />,
     time: 20,
   },
   {
     id: 8,
     label: 'Armchair',
-    icon: <Pouch />,
+    icon: <Pouch fill={colors.dark1} width={20} height={20} />,
     time: 20,
   },
   {
     id: 9,
     label: 'Rack',
-    icon: <Rack />,
+    icon: <Rack fill={colors.dark1} width={20} height={20} />,
     time: 20,
   },
 ]

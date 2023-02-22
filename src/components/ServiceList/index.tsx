@@ -24,7 +24,7 @@ const ServiceList: React.FC<ServiceListProps> = ({type}) => {
               <S.FilterContainer>
                 <Dropdown
                   itemList={regionItems}
-                  placeholder="Filter by region..."
+                  placeholder="Region..."
                   value={region}
                   setValue={setRegion}
                   order={1}
