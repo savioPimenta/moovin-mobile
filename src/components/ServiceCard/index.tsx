@@ -3,7 +3,7 @@ import React from 'react'
 import { getNewOrders, useOrders } from '../../contexts/orderContext'
 import { colors } from '../../lib/colors'
 import { currencyFormatter } from '../../lib/helpers'
-import { furnitureItems, servicesTypes } from '../../pages/NewServices/statics'
+import { furnitureItems, servicesTypes } from '../ServiceList/statics'
 import { Feather } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
 
@@ -11,7 +11,7 @@ import * as S from './styles'
 import { StackActions, useNavigation } from '@react-navigation/native'
 import MyText from '../Text'
 
-const shadow = {
+export const shadow = {
   shadowColor: '#00',
   shadowOffset: { width: 0, height: 5 },
   shadowOpacity: 0.05,

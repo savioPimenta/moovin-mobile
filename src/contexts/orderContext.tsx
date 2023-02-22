@@ -1,6 +1,7 @@
 import React, { useContext, useState, createContext, useEffect } from 'react'
 import Loading from '../components/Loading'
 import { getHomeOrders } from '../services/order'
+import { channels } from './generalContext'
 
 // import {
 //   Pusher,
@@ -8,9 +9,6 @@ import { getHomeOrders } from '../services/order'
 //   PusherChannel,
 //   PusherEvent,
 // } from '@pusher/pusher-websocket-react-native';
-import Pusher from 'pusher-js/react-native'
-
-
 
 export interface getNewOrders {
   id: number
@@ -113,18 +111,12 @@ export const OrdersProvider: React.FC<ProviderProps> = ({ children }) => {
     setIsLoading(false)
   }
 
-  const channels = new Pusher('2d9eb68fbdf6e96af68d', {
-    cluster: 'eu',
-  })
-
   const initializePusher = () => {
     const channel = channels.subscribe('moovin-realtime')
 
     channel.bind('new-order', (data: getNewOrders[]) => {
       try {
-        const obj = { ...response }
-        obj.newOrders = obj.newOrders.concat([...data])
-        setResponse(obj)
+        handleGetData()
       } catch (error) {
         console.log(error)
       }
@@ -142,12 +134,8 @@ export const OrdersProvider: React.FC<ProviderProps> = ({ children }) => {
   }
 
   useEffect(() => {
-    const channel = initializePusher()
-
-    return channel.unsubscribe()
+    initializePusher()
   }, [])
-
-  console.log(response)
 
   useEffect(() => {
     handleGetData()

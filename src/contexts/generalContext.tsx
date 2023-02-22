@@ -1,5 +1,6 @@
 import React, { useContext, useState, createContext } from 'react'
 import Loading from '../components/Loading'
+import Pusher from 'pusher-js/react-native'
 
 interface ContextProps {
   isLoading: boolean
@@ -8,6 +9,9 @@ interface ContextProps {
   setShowSuccessSignup: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+export const channels = new Pusher('2d9eb68fbdf6e96af68d', {
+  cluster: 'eu',
+})
 export const GeneralContext = createContext<ContextProps>({} as ContextProps)
 
 interface ProviderProps {
@@ -17,7 +21,6 @@ interface ProviderProps {
 export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [showSuccessSignup, setShowSuccessSignup] = useState(false)
-  
 
   return (
     <GeneralContext.Provider

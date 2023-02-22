@@ -25,6 +25,7 @@ import { colors } from './src/lib/colors'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { OrdersProvider } from './src/contexts/orderContext'
 import ProgressServices from './src/pages/ProgressServices'
+import CustomDefaultHeader from './src/components/CustomDefaultHeader'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -122,7 +123,7 @@ export default function App() {
             <Stack.Screen
               name="service"
               component={Service}
-              options={{ headerShown: false }}
+              options={{ headerTitle: 'View order', header: (props) => <CustomDefaultHeader props={props} /> }}
             />
 
             <Stack.Screen

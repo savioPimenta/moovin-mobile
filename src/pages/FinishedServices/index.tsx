@@ -1,10 +1,22 @@
 import React from 'react';
-import { View } from 'react-native';
+import NoOrders from '../../components/NoOrders';
+import ServiceList from '../../components/ServiceList';
+import { useOrders } from '../../contexts/orderContext';
 
-// import { Container } from './styles';
+import * as S from '../NewServices/styles';
 
 const FinishedServices: React.FC = () => {
-  return <View />;
+  const { orders } = useOrders()
+
+  return (
+    <S.Container>
+      {orders?.finishedOrders.length > 0 ? (
+        <ServiceList type="finishedOrders" />
+      ) : (
+        <NoOrders />
+      )}
+    </S.Container>
+  )
 }
 
 export default FinishedServices;
