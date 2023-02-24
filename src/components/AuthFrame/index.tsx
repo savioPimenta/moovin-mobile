@@ -9,6 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import * as S from './styles'
 import { useGeneral } from '../../contexts/generalContext'
 import SuccessSignup from '../Modals/SuccessSignup'
+import { colors } from '../../lib/colors'
 
 interface AuthFrameProps {
   children: JSX.Element
@@ -20,7 +21,7 @@ const AuthFrame: React.FC<AuthFrameProps> = ({ children }) => {
 
   return (
     <KeyboardAwareScrollView
-      style={{ flex: 1 }}
+      style={{ flex: 1, backgroundColor: colors.primary }}
       contentContainerStyle={{ flex: 1 }}
     >
       <SafeAreaProvider>

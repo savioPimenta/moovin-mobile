@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios'
 import { API_URL } from '@env'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const baseURL = API_URL
 
@@ -13,9 +14,10 @@ api.interceptors.response.use(
     // Do something with response data
     return response
   },
-  function (error: AxiosError) {
+  async function (error: AxiosError) {
     if (error?.response?.status === 401) {
-      localStorage.removeItem('@Moovin:token')
+      await AsyncStorage.removeItem('@Moovin:token')
+      console.log(error.request)
       delete api.defaults.headers.common.Authorization
     }
     return Promise.reject(error)

@@ -1,5 +1,5 @@
-import { StackActions } from "@react-navigation/native"
-import { acceptOrder } from "../../services/order"
+import { StackActions } from '@react-navigation/native'
+import { acceptOrder } from '../../services/order'
 
 export const serviceStatusType = [
   {
@@ -25,7 +25,8 @@ export const handleChangeStatus = async (
   code: any,
   navigate: any,
   setIsLoading: any,
-  callback?: any
+  callback?: any,
+  hasToPop?: boolean
 ) => {
   if (code) {
     setIsLoading(true)
@@ -45,10 +46,12 @@ export const handleChangeStatus = async (
             'Service canceled successfully. We will contact the customer to help them find another service provider!'
           break
       }
-      if(callback){
+      if (callback) {
         await callback()
       }
-      navigate.dispatch(StackActions.pop())
+      if(hasToPop){
+        navigate.dispatch(StackActions.pop())
+      }
       // showAlert('success', 'Success', message)
     } catch (error) {
       console.log(error)

@@ -119,6 +119,13 @@ export default function App() {
                 component={Profile}
                 options={{ headerShown: false }}
               />
+
+              <Stack.Screen
+                name="home"
+                component={Home}
+                options={{ headerShown: false }}
+              />
+
               <Stack.Screen
                 name="service"
                 component={Service}
@@ -126,12 +133,6 @@ export default function App() {
                   headerTitle: 'View order',
                   header: (props) => <CustomDefaultHeader props={props} />,
                 }}
-              />
-
-              <Stack.Screen
-                name="home"
-                component={Home}
-                options={{ headerShown: false }}
               />
 
               <Stack.Screen

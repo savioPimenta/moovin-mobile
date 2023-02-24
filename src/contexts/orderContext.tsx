@@ -1,7 +1,9 @@
 import React, { useContext, useState, createContext, useEffect } from 'react'
 import Loading from '../components/Loading'
+import Signout from '../components/Modals/Signout'
 import { getHomeOrders } from '../services/order'
 import { channels } from './generalContext'
+import { useUser } from './userContext'
 
 // import {
 //   Pusher,
@@ -69,6 +71,7 @@ interface ProviderProps {
 }
 
 export const OrdersProvider: React.FC<ProviderProps> = ({ children }) => {
+  const { user } = useUser()
   const [region, setRegion] = useState<string>()
   const [order, setOrder] = useState<string | undefined>('desc')
   const [isLoading, setIsLoading] = useState(false)
@@ -119,8 +122,8 @@ export const OrdersProvider: React.FC<ProviderProps> = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    handleGetData()
-  }, [region, order])
+    if (user) handleGetData()
+  }, [region, order, user])
 
   return (
     <OrdersContext.Provider
@@ -133,10 +136,14 @@ export const OrdersProvider: React.FC<ProviderProps> = ({ children }) => {
         handleGetData,
         showSignout,
         setShowSignout,
-        orderLoading: isLoading
+        orderLoading: isLoading,
       }}
     >
       {children}
+
+      {showSignout && (
+        <Signout setShowSignout={setShowSignout} showSignout={showSignout} />
+      )}
       {isLoading && <Loading />}
     </OrdersContext.Provider>
   )

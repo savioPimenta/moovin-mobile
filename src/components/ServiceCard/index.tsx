@@ -133,7 +133,11 @@ const ServiceCard: React.FC<{
               setShowRefuse({ code: item.code, callback: handleGetData })
             }
           >
-            <MyText>Refuse</MyText>
+            <MyText
+              style={{ color: colors.primary, fontFamily: 'Poppins_500Medium' }}
+            >
+              Refuse
+            </MyText>
           </S.RefuseButton>
         ) : (
           type === 2 && (
@@ -142,7 +146,11 @@ const ServiceCard: React.FC<{
                 setShowCancel({ code: item.code, callback: handleGetData })
               }
             >
-              <MyText>Cancel</MyText>
+              <MyText
+                style={{ color: colors.primary, fontFamily: 'Poppins_500Medium' }}
+              >
+                Cancel
+              </MyText>
             </S.RefuseButton>
           )
         )}
@@ -156,7 +164,7 @@ const ServiceCard: React.FC<{
           }}
           style={{ marginLeft: 'auto' }}
         >
-          <MyText>View</MyText>
+          <MyText style={{ fontFamily: 'Poppins_500Medium' }}>View</MyText>
         </S.AcceptButton>
         {type === 2 &&
           isAfter(new Date(), addHours(new Date(item.date), 2)) && (
@@ -166,7 +174,7 @@ const ServiceCard: React.FC<{
               }}
               style={{ marginLeft: 8, backgroundColor: colors.secondary }}
             >
-              <MyText>Finish</MyText>
+              <MyText style={{ fontFamily: 'Poppins_500Medium' }}>Finish</MyText>
             </S.AcceptButton>
           )}
       </S.ButtonsContainer>

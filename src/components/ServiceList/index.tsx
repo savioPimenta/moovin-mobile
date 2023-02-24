@@ -57,7 +57,7 @@ const ServiceList: React.FC<ServiceListProps> = ({ type }) => {
                 />
               </S.FilterContainer>
             )}
-            <ServiceCard item={item as getNewOrders} type={1} />
+            <ServiceCard item={item as getNewOrders} type={type === 'finishedOrders' ? 3 : type === 'myOrders' ? 2 : 1} />
           </>
         )
       }}

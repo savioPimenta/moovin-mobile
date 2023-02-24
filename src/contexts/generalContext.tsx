@@ -2,6 +2,8 @@ import React, { useContext, useState, createContext } from 'react'
 import Loading from '../components/Loading'
 import Pusher from 'pusher-js/react-native'
 import RefuseOrder from '../components/Modals/RefuseOrder'
+import CancelOrder from '../components/Modals/CancelOrder'
+import FinishOrder from '../components/Modals/FinishOrder'
 
 export interface RefuseAndCancel {
   code: string
@@ -59,7 +61,6 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
       }}
     >
       {children}
-      {isLoading && <Loading />}
       {showRefuse && (
         <RefuseOrder
           setShowRefuse={setShowRefuse}
@@ -67,6 +68,21 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
           setIsLoading={setIsLoading}
         />
       )}
+      {showCancel && (
+        <CancelOrder
+          setShowCancel={setShowCancel}
+          showCancel={showCancel}
+          setIsLoading={setIsLoading}
+        />
+      )}
+      {showFinish && (
+        <FinishOrder
+          setShowFinish={setShowFinish}
+          showFinish={showFinish}
+          setIsLoading={setIsLoading}
+        />
+      )}
+      {isLoading && <Loading />}
     </GeneralContext.Provider>
   )
 }

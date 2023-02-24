@@ -9,17 +9,17 @@ import { RefuseAndCancel } from '../../../contexts/generalContext'
 import { useNavigation, useNavigationState } from '@react-navigation/native'
 import { handleChangeStatus } from '../../../pages/Service/statics'
 
-interface RefuseOrderProps {
-  showRefuse: RefuseAndCancel | undefined
-  setShowRefuse: React.Dispatch<
+interface FinishOrderProps {
+  showFinish: RefuseAndCancel | undefined
+  setShowFinish: React.Dispatch<
     React.SetStateAction<RefuseAndCancel | undefined>
   >
   setIsLoading: any
 }
 
-const RefuseOrder: React.FC<RefuseOrderProps> = ({
-  setShowRefuse,
-  showRefuse,
+const FinishOrder: React.FC<FinishOrderProps> = ({
+  setShowFinish,
+  showFinish,
   setIsLoading,
 }) => {
   const navigate = useNavigation()
@@ -41,7 +41,7 @@ const RefuseOrder: React.FC<RefuseOrderProps> = ({
             fontFamily: 'Poppins_700Bold',
           }}
         >
-          Are you sure you want to decline this order?
+          Are you sure you completed the service successfully?
         </MyText>
         <MyText
           style={{
@@ -49,30 +49,30 @@ const RefuseOrder: React.FC<RefuseOrderProps> = ({
             fontSize: 14,
           }}
         >
-          After opting out, this order will no longer appear on your platform
-          and app
+          After marking it as finished, our team will contact the customer. If
+            any irregularity is found, the transporter will be penalized.ƒ
         </MyText>
         <View style={{ height: 32 }} />
         <View style={{ width: '100%' }}>
-          <Button colorScheme={2} onPress={() => setShowRefuse(undefined)}>
-            Keep order
+          <Button colorScheme={2} onPress={() => setShowFinish(undefined)}>
+            Keep order opened
           </Button>
           <View style={{ height: 16 }} />
           <Button
             colorScheme={1}
             onPress={async () => {
               await handleChangeStatus(
-                2,
-                showRefuse?.code,
+                3,
+                showFinish?.code,
                 navigate,
                 setIsLoading,
-                showRefuse?.callback,
+                showFinish?.callback,
                 routesLength > 1
               )
-              setShowRefuse(undefined)
+              setShowFinish(undefined)
             }}
           >
-            Refuse
+            Finish order
           </Button>
         </View>
       </S.Content>
@@ -80,4 +80,4 @@ const RefuseOrder: React.FC<RefuseOrderProps> = ({
   )
 }
 
-export default RefuseOrder
+export default FinishOrder

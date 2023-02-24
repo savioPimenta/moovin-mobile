@@ -14,14 +14,14 @@ import { Feather } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
 
 import * as S from './styles'
-import { StackActions, useNavigation } from '@react-navigation/native'
+import { StackActions, TabActions, useNavigation } from '@react-navigation/native'
 
 interface ServiceProps {
   route: any
 }
 
 const Service: React.FC<ServiceProps> = ({ route }) => {
-  const { code } = route.params
+  const { code } = route?.params
 
   const { handleGetData } = useOrders()
   const { setShowRefuse, setShowCancel, setIsLoading } = useGeneral()
@@ -188,13 +188,21 @@ const Service: React.FC<ServiceProps> = ({ route }) => {
         )}
         {response?.status === 2 && (
           <S.Button
-            onPress={() => handleChangeStatus(1, code, navigate, setIsLoading)}
+            onPress={async () => {
+              await handleChangeStatus(1, code, navigate, setIsLoading, handleGetData, true)
+              navigate.dispatch(TabActions.jumpTo('In progress'))
+            }}
           >
             <S.ButtonText>Accept</S.ButtonText>
           </S.Button>
         )}
         {response?.status === 3 && (
-          <S.Button secondary onPress={() => code && setShowCancel({ code })}>
+          <S.Button
+            secondary
+            onPress={() =>
+              code && setShowCancel({ code, callback: handleGetData })
+            }
+          >
             <S.ButtonText secondary>Cancel</S.ButtonText>
           </S.Button>
         )}

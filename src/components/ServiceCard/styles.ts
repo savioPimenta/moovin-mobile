@@ -16,13 +16,10 @@ export const ServiceCard = styled.View<{ isSingle: boolean }>`
 `
 
 export const ButtonsContainer = styled.View`
-  display: flex;
   flex-direction: row;
-  justify-content: space-between;
 `
 
 export const CardContent = styled.View`
-  display: flex;
   margin-bottom: 8px;
 `
 
@@ -129,9 +126,8 @@ export const CardRowContent = styled(MyText)`
 `
 
 export const RefuseButton = styled.Pressable`
-  color: ${colors.primary};
   font-size: 16px;
-  font-family: 'Poppins_500Medium';
+  padding: 8px 16px;
 `
 
 export const AcceptButton = styled.Pressable`
@@ -140,6 +136,5 @@ export const AcceptButton = styled.Pressable`
   padding: 8px 16px;
   border-radius: 5px;
   font-size: 16px;
-  font-family: 'Poppins_500Medium';
   cursor: pointer;
 `
