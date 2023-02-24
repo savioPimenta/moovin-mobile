@@ -8,8 +8,8 @@ import { useGeneral } from '../../contexts/generalContext'
 import { getNewOrders, useOrders } from '../../contexts/orderContext'
 import { colors } from '../../lib/colors'
 import { currencyFormatter } from '../../lib/helpers'
-import { acceptOrder, getUniqueOrders } from '../../services/order'
-import { serviceStatusType } from './statics'
+import { getUniqueOrders } from '../../services/order'
+import { handleChangeStatus, serviceStatusType } from './statics'
 import { Feather } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
 
@@ -20,47 +20,11 @@ interface ServiceProps {
   route: any
 }
 
-export const handleChangeStatus = async (
-  type: any,
-  code: any,
-  navigate: any,
-  setIsLoading: any,
-  callback?: any
-) => {
-  if (code) {
-    setIsLoading(true)
-    try {
-      await acceptOrder(code, type)
-      let message
-      switch (type) {
-        case 1:
-          message =
-            'Service accepted successfully. You will shortly receive the necessary information by email!'
-          break
-        case 2:
-          message = 'Service refused successfully!'
-          break
-        default:
-          message =
-            'Service canceled successfully. We will contact the customer to help them find another service provider!'
-          break
-      }
-      navigate.dispatch(StackActions.push('services'))
-      callback && (await callback())
-      // showAlert('success', 'Success', message)
-    } catch (error) {
-      console.log(error)
-    }
-    setIsLoading(false)
-  }
-}
-
 const Service: React.FC<ServiceProps> = ({ route }) => {
   const { code } = route.params
 
-  const { setIsLoading } = useGeneral()
-
-  const { setShowRefuse, setShowCancel } = useOrders()
+  const { handleGetData } = useOrders()
+  const { setShowRefuse, setShowCancel, setIsLoading } = useGeneral()
   const [response, setResponse] = useState<getNewOrders>()
 
   const navigate = useNavigation()
@@ -159,7 +123,7 @@ const Service: React.FC<ServiceProps> = ({ route }) => {
                             style={{
                               fontFamily: 'Poppins_700Bold',
                               color: colors.white,
-                              fontSize: 15
+                              fontSize: 15,
                             }}
                           >
                             {item.qtd}
@@ -210,35 +174,35 @@ const Service: React.FC<ServiceProps> = ({ route }) => {
       </S.Container>
       <S.Footer>
         {response?.status === 2 && (
-          <S.Button secondary onPress={() => setShowRefuse({ code })}>
-            <S.ButtonText secondary>
-            Recusar
-            </S.ButtonText>
+          <S.Button
+            secondary
+            onPress={() => {
+              setShowRefuse({
+                code,
+                callback: handleGetData,
+              })
+            }}
+          >
+            <S.ButtonText secondary>Refuse</S.ButtonText>
           </S.Button>
         )}
         {response?.status === 2 && (
           <S.Button
             onPress={() => handleChangeStatus(1, code, navigate, setIsLoading)}
           >
-            <S.ButtonText>
-            Aceitar
-            </S.ButtonText>
+            <S.ButtonText>Accept</S.ButtonText>
           </S.Button>
         )}
         {response?.status === 3 && (
           <S.Button secondary onPress={() => code && setShowCancel({ code })}>
-            <S.ButtonText secondary> 
-            Cancelar
-            </S.ButtonText>
+            <S.ButtonText secondary>Cancel</S.ButtonText>
           </S.Button>
         )}
         {response?.status === 3 && (
           <S.Button
             onPress={() => navigate.dispatch(StackActions.push('chat'))}
           >
-            <S.ButtonText>
-            Chat
-            </S.ButtonText>
+            <S.ButtonText>Chat</S.ButtonText>
           </S.Button>
         )}
       </S.Footer>

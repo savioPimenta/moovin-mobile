@@ -78,7 +78,6 @@ export const CardTag = styled.View`
   padding: 8px;
   background: ${colors.quartenary};
   border-radius: 5px;
-  margin: 0 8px;
 `
 
 export const CardTagIcon = styled.View`

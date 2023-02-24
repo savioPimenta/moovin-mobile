@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { RefreshControl, View } from 'react-native'
 import { getNewOrders, useOrders } from '../../contexts/orderContext'
 
 import * as S from './styles'
@@ -8,14 +8,28 @@ import ServiceCard from '../ServiceCard'
 import { orderByItems, regionItems } from './statics'
 
 interface ServiceListProps {
-    type: 'newOrders' | 'finishedOrders' | 'myOrders'
+  type: 'newOrders' | 'finishedOrders' | 'myOrders'
 }
 
-const ServiceList: React.FC<ServiceListProps> = ({type}) => {
-    const { orders, order, setOrder, region, setRegion } = useOrders()
+const ServiceList: React.FC<ServiceListProps> = ({ type }) => {
+  const {
+    orders,
+    order,
+    setOrder,
+    region,
+    setRegion,
+    orderLoading,
+    handleGetData,
+  } = useOrders()
   return (
     <S.ServicesList
-      contentContainerStyle={[{ alignItems: 'stretch' }, type !== 'newOrders' && {paddingTop: '15%'}]}
+      refreshControl={
+        <RefreshControl refreshing={orderLoading} onRefresh={handleGetData} progressViewOffset={60}/>
+      }
+      contentContainerStyle={[
+        { alignItems: 'stretch' },
+        type !== 'newOrders' && { paddingTop: '15%' },
+      ]}
       data={orders[type]}
       renderItem={({ item, index }) => {
         return (

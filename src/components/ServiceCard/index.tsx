@@ -10,6 +10,8 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import * as S from './styles'
 import { StackActions, useNavigation } from '@react-navigation/native'
 import MyText from '../Text'
+import { useGeneral } from '../../contexts/generalContext'
+import { View } from 'react-native'
 
 export const shadow = {
   shadowColor: '#00',
@@ -24,8 +26,9 @@ const ServiceCard: React.FC<{
   isSingle?: boolean
   type: number
 }> = ({ item, isSingle, type }) => {
-  const { handleGetData, setShowRefuse, setShowCancel, setShowFinish } =
-    useOrders()
+  const { handleGetData } = useOrders()
+
+  const { setShowRefuse, setShowCancel, setShowFinish } = useGeneral()
   const navigate = useNavigation()
 
   return (
@@ -91,6 +94,7 @@ const ServiceCard: React.FC<{
               <S.CardTagTitle>Packaging</S.CardTagTitle>
             </S.CardTag>
           )}
+          {item.hasLoad && item.hasPackage && <View style={{ width: 8 }} />}
           {item.hasLoad && (
             <S.CardTag>
               <S.CardTagIcon>

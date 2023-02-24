@@ -57,28 +57,26 @@ const screenOptions = (route: any, color: any) => {
 function Home() {
   const insets = useSafeAreaInsets()
   return (
-    <OrdersProvider>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color }) => screenOptions(route, color),
-          tabBarActiveTintColor: colors.primary,
-          tabBarLabelStyle: {
-            fontSize: 14,
-          },
-          tabBarStyle: {
-            height: 70 + insets.bottom,
-            paddingTop: 13,
-            paddingBottom: insets.bottom + 7.5,
-          },
-          header: (props) => <CustomHeader props={props} />,
-        })}
-      >
-        <Tab.Screen name="Home" component={NewServices} />
-        <Tab.Screen name="In progress" component={ProgressServices} />
-        <Tab.Screen name="Finished" component={FinishedServices} />
-        <Tab.Screen name="Wallet" component={Wallet} />
-      </Tab.Navigator>
-    </OrdersProvider>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color }) => screenOptions(route, color),
+        tabBarActiveTintColor: colors.primary,
+        tabBarLabelStyle: {
+          fontSize: 14,
+        },
+        tabBarStyle: {
+          height: 70 + insets.bottom,
+          paddingTop: 13,
+          paddingBottom: insets.bottom + 7.5,
+        },
+        header: (props) => <CustomHeader props={props} />,
+      })}
+    >
+      <Tab.Screen name="Home" component={NewServices} />
+      <Tab.Screen name="In progress" component={ProgressServices} />
+      <Tab.Screen name="Finished" component={FinishedServices} />
+      <Tab.Screen name="Wallet" component={Wallet} />
+    </Tab.Navigator>
   )
 }
 
@@ -98,46 +96,51 @@ export default function App() {
     <NavigationContainer>
       <GeneralProvider>
         <UserProvider>
-          <Stack.Navigator initialRouteName="loading">
-            <Stack.Screen
-              name="signin"
-              component={Signin}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="pass"
-              component={Password}
-              options={{ headerShown: false }}
-            />
+          <OrdersProvider>
+            <Stack.Navigator initialRouteName="loading">
+              <Stack.Screen
+                name="signin"
+                component={Signin}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="pass"
+                component={Password}
+                options={{ headerShown: false }}
+              />
 
-            <Stack.Screen
-              name="chat"
-              component={Chat}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="profile"
-              component={Profile}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="service"
-              component={Service}
-              options={{ headerTitle: 'View order', header: (props) => <CustomDefaultHeader props={props} /> }}
-            />
+              <Stack.Screen
+                name="chat"
+                component={Chat}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="profile"
+                component={Profile}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="service"
+                component={Service}
+                options={{
+                  headerTitle: 'View order',
+                  header: (props) => <CustomDefaultHeader props={props} />,
+                }}
+              />
 
-            <Stack.Screen
-              name="home"
-              component={Home}
-              options={{ headerShown: false }}
-            />
+              <Stack.Screen
+                name="home"
+                component={Home}
+                options={{ headerShown: false }}
+              />
 
-            <Stack.Screen
-              name="loading"
-              component={Loading}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
+              <Stack.Screen
+                name="loading"
+                component={Loading}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          </OrdersProvider>
         </UserProvider>
       </GeneralProvider>
     </NavigationContainer>

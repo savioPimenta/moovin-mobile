@@ -50,11 +50,6 @@ export interface GetOrdersData {
   myOrders: getNewOrders[]
 }
 
-interface RefuseAndCancel {
-  code: string
-  callback?: () => Promise<void>
-}
-
 interface ContextProps {
   orders: GetOrdersData
   region: string | undefined
@@ -64,18 +59,7 @@ interface ContextProps {
   handleGetData: () => Promise<void>
   showSignout: boolean
   setShowSignout: React.Dispatch<React.SetStateAction<boolean>>
-  showRefuse: RefuseAndCancel | undefined
-  setShowRefuse: React.Dispatch<
-    React.SetStateAction<RefuseAndCancel | undefined>
-  >
-  showCancel: RefuseAndCancel | undefined
-  setShowCancel: React.Dispatch<
-    React.SetStateAction<RefuseAndCancel | undefined>
-  >
-  showFinish: RefuseAndCancel | undefined
-  setShowFinish: React.Dispatch<
-    React.SetStateAction<RefuseAndCancel | undefined>
-  >
+  orderLoading: boolean
 }
 
 export const OrdersContext = createContext<ContextProps>({} as ContextProps)
@@ -90,9 +74,6 @@ export const OrdersProvider: React.FC<ProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const [showSignout, setShowSignout] = useState(false)
-  const [showRefuse, setShowRefuse] = useState<RefuseAndCancel | undefined>()
-  const [showCancel, setShowCancel] = useState<RefuseAndCancel | undefined>()
-  const [showFinish, setShowFinish] = useState<RefuseAndCancel | undefined>()
 
   const [response, setResponse] = useState<GetOrdersData>({
     newOrders: [],
@@ -152,12 +133,7 @@ export const OrdersProvider: React.FC<ProviderProps> = ({ children }) => {
         handleGetData,
         showSignout,
         setShowSignout,
-        showRefuse,
-        setShowRefuse,
-        showCancel,
-        setShowCancel,
-        showFinish,
-        setShowFinish,
+        orderLoading: isLoading
       }}
     >
       {children}
