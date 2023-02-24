@@ -24,7 +24,6 @@ const AuthFrame: React.FC<AuthFrameProps> = ({ children }) => {
       style={{ flex: 1, backgroundColor: colors.primary }}
       contentContainerStyle={{ flex: 1 }}
     >
-      <SafeAreaProvider>
         <S.Container>
           <Asset
             preserveAspectRatio="none"
@@ -47,7 +46,6 @@ const AuthFrame: React.FC<AuthFrameProps> = ({ children }) => {
           </View>
         </S.Container>
         {showSuccessSignup && <SuccessSignup />}
-      </SafeAreaProvider>
     </KeyboardAwareScrollView>
   )
 }

@@ -5,7 +5,7 @@ import MyText from '../../Text'
 import Asset from '../../../../assets/modal_success.png'
 
 import * as S from './styles'
-import { RefuseAndCancel } from '../../../contexts/generalContext'
+import { RefuseAndCancel, useGeneral } from '../../../contexts/generalContext'
 import { useNavigation, useNavigationState } from '@react-navigation/native'
 import { handleChangeStatus } from '../../../pages/Service/statics'
 
@@ -15,12 +15,16 @@ interface RefuseOrderProps {
     React.SetStateAction<RefuseAndCancel | undefined>
   >
   setIsLoading: any
+  showError: any
+  showSuccess: any
 }
 
 const RefuseOrder: React.FC<RefuseOrderProps> = ({
   setShowRefuse,
   showRefuse,
   setIsLoading,
+  showError,
+  showSuccess,
 }) => {
   const navigate = useNavigation()
   const routesLength = useNavigationState((state) => state.routes.length)
@@ -66,6 +70,8 @@ const RefuseOrder: React.FC<RefuseOrderProps> = ({
                 showRefuse?.code,
                 navigate,
                 setIsLoading,
+                showError,
+                showSuccess,
                 showRefuse?.callback,
                 routesLength > 1
               )

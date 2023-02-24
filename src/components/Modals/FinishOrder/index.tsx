@@ -15,12 +15,16 @@ interface FinishOrderProps {
     React.SetStateAction<RefuseAndCancel | undefined>
   >
   setIsLoading: any
+  showError: any
+  showSuccess: any
 }
 
 const FinishOrder: React.FC<FinishOrderProps> = ({
   setShowFinish,
   showFinish,
   setIsLoading,
+  showError,
+  showSuccess,
 }) => {
   const navigate = useNavigation()
   const routesLength = useNavigationState((state) => state.routes.length)
@@ -50,7 +54,7 @@ const FinishOrder: React.FC<FinishOrderProps> = ({
           }}
         >
           After marking it as finished, our team will contact the customer. If
-            any irregularity is found, the transporter will be penalized.ƒ
+          any irregularity is found, the transporter will be penalized.ƒ
         </MyText>
         <View style={{ height: 32 }} />
         <View style={{ width: '100%' }}>
@@ -62,10 +66,12 @@ const FinishOrder: React.FC<FinishOrderProps> = ({
             colorScheme={1}
             onPress={async () => {
               await handleChangeStatus(
-                3,
+                4,
                 showFinish?.code,
                 navigate,
                 setIsLoading,
+                showError,
+                showSuccess,
                 showFinish?.callback,
                 routesLength > 1
               )

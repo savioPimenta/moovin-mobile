@@ -9,6 +9,15 @@ export interface RefuseAndCancel {
   code: string
   callback?: () => Promise<void>
 }
+
+interface ToastProps {
+  type: string | null
+  message: any
+  show: boolean
+  duration: number
+  iconName: string
+}
+
 interface ContextProps {
   isLoading: boolean
   setIsLoading: any
@@ -26,6 +35,10 @@ interface ContextProps {
   setShowFinish: React.Dispatch<
     React.SetStateAction<RefuseAndCancel | undefined>
   >
+  toast: ToastProps
+  clearToast: Function
+  showSuccess(message: string): void
+  showError(toastObj: Partial<ToastProps>): void
 }
 
 export const channels = new Pusher('2d9eb68fbdf6e96af68d', {
@@ -45,6 +58,50 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
   const [showCancel, setShowCancel] = useState<RefuseAndCancel | undefined>()
   const [showFinish, setShowFinish] = useState<RefuseAndCancel | undefined>()
 
+  const [toast, setToast] = useState<ToastProps>({
+    type: null,
+    message: null,
+    show: false,
+    duration: 4000,
+    iconName: '',
+  })
+
+  const clearToast = () => {
+    setToast({
+      type: null,
+      message: null,
+      show: false,
+      duration: 4000,
+      iconName: '',
+    })
+  }
+
+  const showSuccess = (message: string) => {
+    setToast({
+      type: 'success',
+      message: message,
+      show: true,
+      duration: 4000,
+      iconName: 'check',
+    })
+  }
+
+  const showError = (toastObj: Partial<ToastProps>) => {
+    const e = toastObj.message
+    const message =
+      e?.response?.data?.message ||
+      e?.response?.data?.errors?.[0] ||
+      e?.message ||
+      'We had internal problems'
+    setToast({
+      type: 'error',
+      message: message,
+      show: true,
+      duration: 4000,
+      iconName: 'exclamation-triangle',
+    })
+  }
+
   return (
     <GeneralContext.Provider
       value={{
@@ -58,6 +115,10 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
         setShowCancel,
         showFinish,
         setShowFinish,
+        toast,
+        clearToast,
+        showSuccess,
+        showError,
       }}
     >
       {children}
@@ -66,6 +127,8 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
           setShowRefuse={setShowRefuse}
           showRefuse={showRefuse}
           setIsLoading={setIsLoading}
+          showError={showError}
+          showSuccess={showSuccess}
         />
       )}
       {showCancel && (
@@ -73,6 +136,8 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
           setShowCancel={setShowCancel}
           showCancel={showCancel}
           setIsLoading={setIsLoading}
+          showError={showError}
+          showSuccess={showSuccess}
         />
       )}
       {showFinish && (
@@ -80,6 +145,8 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
           setShowFinish={setShowFinish}
           showFinish={showFinish}
           setIsLoading={setIsLoading}
+          showError={showError}
+          showSuccess={showSuccess}
         />
       )}
       {isLoading && <Loading />}

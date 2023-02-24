@@ -53,7 +53,7 @@ interface ProviderProps {
 }
 
 export const UserProvider: React.FC<ProviderProps> = ({ children }) => {
-  const { setIsLoading } = useGeneral()
+  const { showError, setIsLoading } = useGeneral()
 
   const [user, setUser] = useState<User | null | undefined>(null)
   const [userLoaded, setUserLoaded] = useState<boolean>(false)
@@ -71,7 +71,7 @@ export const UserProvider: React.FC<ProviderProps> = ({ children }) => {
       navigate.dispatch(StackActions.replace('home'))
     } catch (e: any) {
       navigate.dispatch(StackActions.replace('signin'))
-      console.log(e)
+      showError(e)
     }
     setIsLoading(false)
   }
@@ -88,10 +88,10 @@ export const UserProvider: React.FC<ProviderProps> = ({ children }) => {
         await getUser()
         navigate.dispatch(StackActions.replace('home'))
       } else {
-        return console.log({ message: firstToUpper(response.data.errors[0]) })
+        return showError(firstToUpper(response.data.errors[0]) as any)
       }
     } catch (error) {
-      console.log(error)
+      showError(error as any)
     }
   }
 
@@ -120,7 +120,7 @@ export const UserProvider: React.FC<ProviderProps> = ({ children }) => {
         return firstToUpper(response.data.errors[0])
       }
     } catch (error) {
-      console.log(error)
+      showError(error as any)
     }
     setIsLoading(false)
   }

@@ -22,10 +22,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import CustomHeader from './src/components/CustomHeader'
 import { AntDesign } from '@expo/vector-icons'
 import { colors } from './src/lib/colors'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context'
 import { OrdersProvider } from './src/contexts/orderContext'
 import ProgressServices from './src/pages/ProgressServices'
 import CustomDefaultHeader from './src/components/CustomDefaultHeader'
+import Toast from './src/components/Toast'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -93,57 +97,60 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <GeneralProvider>
-        <UserProvider>
-          <OrdersProvider>
-            <Stack.Navigator initialRouteName="loading">
-              <Stack.Screen
-                name="signin"
-                component={Signin}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="pass"
-                component={Password}
-                options={{ headerShown: false }}
-              />
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <GeneralProvider>
+          <UserProvider>
+            <OrdersProvider>
+              <Stack.Navigator initialRouteName="loading">
+                <Stack.Screen
+                  name="signin"
+                  component={Signin}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="pass"
+                  component={Password}
+                  options={{ headerShown: false }}
+                />
 
-              <Stack.Screen
-                name="chat"
-                component={Chat}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="profile"
-                component={Profile}
-                options={{ headerShown: false }}
-              />
+                <Stack.Screen
+                  name="chat"
+                  component={Chat}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="profile"
+                  component={Profile}
+                  options={{ headerShown: false }}
+                />
 
-              <Stack.Screen
-                name="home"
-                component={Home}
-                options={{ headerShown: false }}
-              />
+                <Stack.Screen
+                  name="home"
+                  component={Home}
+                  options={{ headerShown: false }}
+                />
 
-              <Stack.Screen
-                name="service"
-                component={Service}
-                options={{
-                  headerTitle: 'View order',
-                  header: (props) => <CustomDefaultHeader props={props} />,
-                }}
-              />
+                <Stack.Screen
+                  name="service"
+                  component={Service}
+                  options={{
+                    headerTitle: 'View order',
+                    header: (props) => <CustomDefaultHeader props={props} />,
+                  }}
+                />
 
-              <Stack.Screen
-                name="loading"
-                component={Loading}
-                options={{ headerShown: false }}
-              />
-            </Stack.Navigator>
-          </OrdersProvider>
-        </UserProvider>
-      </GeneralProvider>
-    </NavigationContainer>
+                <Stack.Screen
+                  name="loading"
+                  component={Loading}
+                  options={{ headerShown: false }}
+                />
+              </Stack.Navigator>
+              <Toast />
+            </OrdersProvider>
+          </UserProvider>
+        </GeneralProvider>
+      </NavigationContainer>
+    </SafeAreaProvider>
   )
 }

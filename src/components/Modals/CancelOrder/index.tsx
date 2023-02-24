@@ -15,12 +15,16 @@ interface CancelOrderProps {
     React.SetStateAction<RefuseAndCancel | undefined>
   >
   setIsLoading: any
+  showError: any
+  showSuccess: any
 }
 
 const CancelOrder: React.FC<CancelOrderProps> = ({
   setShowCancel,
   showCancel,
   setIsLoading,
+  showError,
+  showSuccess
 }) => {
   const navigate = useNavigation()
   const routesLength = useNavigationState((state) => state.routes.length)
@@ -66,6 +70,8 @@ const CancelOrder: React.FC<CancelOrderProps> = ({
                 showCancel?.code,
                 navigate,
                 setIsLoading,
+                showError,
+                showSuccess,
                 showCancel?.callback,
                 routesLength > 1
               )

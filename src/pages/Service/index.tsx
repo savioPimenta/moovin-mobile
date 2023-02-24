@@ -14,7 +14,11 @@ import { Feather } from '@expo/vector-icons'
 import { FontAwesome5 } from '@expo/vector-icons'
 
 import * as S from './styles'
-import { StackActions, TabActions, useNavigation } from '@react-navigation/native'
+import {
+  StackActions,
+  TabActions,
+  useNavigation,
+} from '@react-navigation/native'
 
 interface ServiceProps {
   route: any
@@ -24,7 +28,8 @@ const Service: React.FC<ServiceProps> = ({ route }) => {
   const { code } = route?.params
 
   const { handleGetData } = useOrders()
-  const { setShowRefuse, setShowCancel, setIsLoading } = useGeneral()
+  const { setShowRefuse, setShowCancel, setIsLoading, showError, showSuccess } =
+    useGeneral()
   const [response, setResponse] = useState<getNewOrders>()
 
   const navigate = useNavigation()
@@ -34,8 +39,8 @@ const Service: React.FC<ServiceProps> = ({ route }) => {
       try {
         const res = await getUniqueOrders(code)
         setResponse(res.order)
-      } catch (error) {
-        console.log(error)
+      } catch (error: any) {
+        showError(error)
       }
     }
   }
@@ -189,7 +194,16 @@ const Service: React.FC<ServiceProps> = ({ route }) => {
         {response?.status === 2 && (
           <S.Button
             onPress={async () => {
-              await handleChangeStatus(1, code, navigate, setIsLoading, handleGetData, true)
+              await handleChangeStatus(
+                1,
+                code,
+                navigate,
+                setIsLoading,
+                showError,
+                showSuccess,
+                handleGetData,
+                true
+              )
               navigate.dispatch(TabActions.jumpTo('In progress'))
             }}
           >

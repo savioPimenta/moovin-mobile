@@ -25,6 +25,8 @@ export const handleChangeStatus = async (
   code: any,
   navigate: any,
   setIsLoading: any,
+  showError: any,
+  showSuccess: any,
   callback?: any,
   hasToPop?: boolean
 ) => {
@@ -49,12 +51,12 @@ export const handleChangeStatus = async (
       if (callback) {
         await callback()
       }
-      if(hasToPop){
+      if (hasToPop) {
         navigate.dispatch(StackActions.pop())
       }
-      // showAlert('success', 'Success', message)
-    } catch (error) {
-      console.log(error)
+      showSuccess(message)
+    } catch (error: any) {
+      showError(error)
     }
     setIsLoading(false)
   }

@@ -1,7 +1,11 @@
 import { BlurView } from 'expo-blur'
 import AnimatedLottieView from 'lottie-react-native'
 import React, { useRef } from 'react'
-import { Platform, RefreshControl, ScrollView, View } from 'react-native'
+import {
+  RefreshControl,
+  ScrollView,
+  View,
+} from 'react-native'
 import NoOrdersAnimation from '../../../assets/no-orders.json'
 import { useOrders } from '../../contexts/orderContext'
 import { colors } from '../../lib/colors'
@@ -9,19 +13,20 @@ import MyText from '../Text'
 
 const NoOrders: React.FC = () => {
   const lottieViewRef = useRef<AnimatedLottieView>(null)
-  const {
-    orderLoading,
-    handleGetData,
-  } = useOrders()
+  const { orderLoading, handleGetData } = useOrders()
 
   return (
     <ScrollView
       style={{ flex: 1 }}
       refreshControl={
-        <RefreshControl refreshing={orderLoading} onRefresh={handleGetData} progressViewOffset={60}/>
+        <RefreshControl
+          refreshing={orderLoading}
+          onRefresh={handleGetData}
+          progressViewOffset={60}
+        />
       }
       contentContainerStyle={{
-        flex: 1
+        flex: 1,
       }}
     >
       <View
