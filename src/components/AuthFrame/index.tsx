@@ -10,6 +10,7 @@ import * as S from './styles'
 import { useGeneral } from '../../contexts/generalContext'
 import SuccessSignup from '../Modals/SuccessSignup'
 import { colors } from '../../lib/colors'
+import SuccessPass from '../Modals/SuccessPass'
 
 interface AuthFrameProps {
   children: JSX.Element
@@ -17,7 +18,7 @@ interface AuthFrameProps {
 
 const AuthFrame: React.FC<AuthFrameProps> = ({ children }) => {
   const insets = useSafeAreaInsets()
-  const { showSuccessSignup } = useGeneral()
+  const { showSuccessSignup, showSuccessPass } = useGeneral()
 
   return (
     <KeyboardAwareScrollView
@@ -46,6 +47,7 @@ const AuthFrame: React.FC<AuthFrameProps> = ({ children }) => {
           </View>
         </S.Container>
         {showSuccessSignup && <SuccessSignup />}
+        {showSuccessPass && <SuccessPass />}
     </KeyboardAwareScrollView>
   )
 }

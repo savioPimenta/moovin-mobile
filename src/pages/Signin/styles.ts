@@ -19,6 +19,5 @@ export const Form = styled.View`
 `
 
 export const Title = styled(MyText)`
-  margin-bottom: 32px;
   font-size: 18px;
 `

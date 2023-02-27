@@ -23,6 +23,8 @@ interface ContextProps {
   setIsLoading: any
   showSuccessSignup: boolean
   setShowSuccessSignup: React.Dispatch<React.SetStateAction<boolean>>
+  showSuccessPass: boolean
+  setShowSuccessPass: React.Dispatch<React.SetStateAction<boolean>>
   showRefuse: RefuseAndCancel | undefined
   setShowRefuse: React.Dispatch<
     React.SetStateAction<RefuseAndCancel | undefined>
@@ -38,7 +40,7 @@ interface ContextProps {
   toast: ToastProps
   clearToast: Function
   showSuccess(message: string): void
-  showError(toastObj: Partial<ToastProps>): void
+  showError(e: any): void
 }
 
 export const channels = new Pusher('2d9eb68fbdf6e96af68d', {
@@ -53,6 +55,7 @@ interface ProviderProps {
 export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [showSuccessSignup, setShowSuccessSignup] = useState(false)
+  const [showSuccessPass, setShowSuccessPass] = useState(false)
 
   const [showRefuse, setShowRefuse] = useState<RefuseAndCancel | undefined>()
   const [showCancel, setShowCancel] = useState<RefuseAndCancel | undefined>()
@@ -86,8 +89,7 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
     })
   }
 
-  const showError = (toastObj: Partial<ToastProps>) => {
-    const e = toastObj.message
+  const showError = (e: any) => {
     const message =
       e?.response?.data?.message ||
       e?.response?.data?.errors?.[0] ||
@@ -109,6 +111,8 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
         setIsLoading,
         showSuccessSignup,
         setShowSuccessSignup,
+        showSuccessPass,
+        setShowSuccessPass,
         showRefuse,
         setShowRefuse,
         showCancel,

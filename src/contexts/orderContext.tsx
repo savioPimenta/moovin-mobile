@@ -2,7 +2,7 @@ import React, { useContext, useState, createContext, useEffect } from 'react'
 import Loading from '../components/Loading'
 import Signout from '../components/Modals/Signout'
 import { getHomeOrders } from '../services/order'
-import { channels } from './generalContext'
+import { channels, useGeneral } from './generalContext'
 import { useUser } from './userContext'
 
 // import {
@@ -72,6 +72,7 @@ interface ProviderProps {
 
 export const OrdersProvider: React.FC<ProviderProps> = ({ children }) => {
   const { user } = useUser()
+  const { showError } = useGeneral()
   const [region, setRegion] = useState<string>()
   const [order, setOrder] = useState<string | undefined>('desc')
   const [isLoading, setIsLoading] = useState(false)
@@ -89,8 +90,8 @@ export const OrdersProvider: React.FC<ProviderProps> = ({ children }) => {
     try {
       const res = await getHomeOrders(region, order)
       setResponse(res)
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      showError(error)
     }
     setIsLoading(false)
   }
@@ -101,16 +102,16 @@ export const OrdersProvider: React.FC<ProviderProps> = ({ children }) => {
     channel.bind('new-order', (data: getNewOrders[]) => {
       try {
         handleGetData()
-      } catch (error) {
-        console.log(error)
+      } catch (error: any) {
+        showError(error)
       }
     })
 
     channel.bind('has-new-order', () => {
       try {
         handleGetData()
-      } catch (error) {
-        console.log(error)
+      } catch (error: any) {
+        showError(error)
       }
     })
 

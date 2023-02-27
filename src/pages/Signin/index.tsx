@@ -13,13 +13,15 @@ import * as WebBrowser from 'expo-web-browser'
 import { PLATFORM_URL } from '@env'
 import { useGeneral } from '../../contexts/generalContext'
 import { useUser } from '../../contexts/userContext'
+import { StackActions, useNavigation } from '@react-navigation/native'
 
 const Signin: React.FC = () => {
   const [result, setResult] = useState<any>(null)
   const [email, setEmail] = useState('')
   const [pass, setPass] = useState('')
   const { login } = useUser()
-  const { setShowSuccessSignup } = useGeneral()
+  const { setShowSuccessSignup, showError } = useGeneral()
+  const navigate = useNavigation()
 
   const _handlePressButtonAsync = async () => {
     const redirect = Linking.createURL('/')
@@ -31,17 +33,13 @@ const Signin: React.FC = () => {
 
   const handleLogin = async () => {
     if (email === '' || pass === '') {
-      console.log(
-        'error',
-        'Login failed',
-        'Fill the form with valid credentials'
-      )
+      showError({ message: 'Login failed' })
       return
     }
 
     const response = await login(email, pass)
     if (typeof response === 'string') {
-      console.log('error', 'Login failed', response)
+      showError({ message: 'Login failed' })
     }
   }
 
@@ -73,6 +71,9 @@ const Signin: React.FC = () => {
           />
           <View style={{ height: 16 }} />
           <Pressable
+            onPress={() => {
+              navigate.dispatch(StackActions.push('pass'))
+            }}
             style={{
               marginLeft: 'auto',
             }}
