@@ -37,6 +37,8 @@ interface ContextProps {
   setShowFinish: React.Dispatch<
     React.SetStateAction<RefuseAndCancel | undefined>
   >
+  showWithdraw: boolean
+  setShowWithdraw: React.Dispatch<React.SetStateAction<boolean>>
   toast: ToastProps
   clearToast: Function
   showSuccess(message: string): void
@@ -60,6 +62,7 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
   const [showRefuse, setShowRefuse] = useState<RefuseAndCancel | undefined>()
   const [showCancel, setShowCancel] = useState<RefuseAndCancel | undefined>()
   const [showFinish, setShowFinish] = useState<RefuseAndCancel | undefined>()
+  const [showWithdraw, setShowWithdraw] = useState<boolean>(false)
 
   const [toast, setToast] = useState<ToastProps>({
     type: null,
@@ -119,6 +122,8 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
         setShowCancel,
         showFinish,
         setShowFinish,
+        showWithdraw,
+        setShowWithdraw,
         toast,
         clearToast,
         showSuccess,
