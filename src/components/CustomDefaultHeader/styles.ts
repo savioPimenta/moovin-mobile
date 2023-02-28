@@ -11,5 +11,5 @@ export const Content = styled.View`
 
 export const Button = styled.TouchableOpacity`
   position: absolute;
-  left: 32px;
+  left: 12px;
 `

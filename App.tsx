@@ -117,7 +117,10 @@ export default function App() {
                 <Stack.Screen
                   name="chat"
                   component={Chat}
-                  options={{ headerShown: false }}
+                  options={{
+                    headerTitle: 'Chat',
+                    header: (props) => <CustomDefaultHeader props={props} />,
+                  }}
                 />
                 <Stack.Screen
                   name="profile"

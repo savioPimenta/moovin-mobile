@@ -222,7 +222,14 @@ const Service: React.FC<ServiceProps> = ({ route }) => {
         )}
         {response?.status === 3 && (
           <S.Button
-            onPress={() => navigate.dispatch(StackActions.push('chat'))}
+            onPress={() =>
+              navigate.dispatch(
+                StackActions.push('chat', {
+                  id: response.id,
+                  customerId: response.customerId
+                })
+              )
+            }
           >
             <S.ButtonText>Chat</S.ButtonText>
           </S.Button>
