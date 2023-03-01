@@ -10,6 +10,7 @@ import api from '../services/api'
 import ModalSubscription from '../components/Modals/SubscriptionExpired'
 import { StackActions, useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Withdraw from '../components/Modals/Withdraw'
 
 export interface User {
   name: string
@@ -37,6 +38,10 @@ interface ContextProps {
   user: User | null | undefined
   userLoaded: boolean
   setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>
+  showWithdraw: boolean
+  setShowWithdraw: React.Dispatch<React.SetStateAction<boolean>>
+  balance: number
+  setBalance: React.Dispatch<React.SetStateAction<number>>
   login: (email: string, pass: string) => Promise<void | string>
   logout: () => Promise<void>
   resetPassword: (
@@ -53,10 +58,14 @@ interface ProviderProps {
 }
 
 export const UserProvider: React.FC<ProviderProps> = ({ children }) => {
-  const { showError, setIsLoading } = useGeneral()
+  const { showError, setIsLoading, showSuccess } = useGeneral()
 
   const [user, setUser] = useState<User | null | undefined>(null)
   const [userLoaded, setUserLoaded] = useState<boolean>(false)
+
+  const [showWithdraw, setShowWithdraw] = useState<boolean>(false)
+  const [balance, setBalance] = useState(0)
+
   const subscriptionExpired =
     user?.role === 2 &&
     user?.subscription_expires_at &&
@@ -147,6 +156,10 @@ export const UserProvider: React.FC<ProviderProps> = ({ children }) => {
         user,
         userLoaded,
         setUser,
+        showWithdraw,
+        setShowWithdraw,
+        balance,
+        setBalance,
         login,
         logout,
         resetPassword,
@@ -154,6 +167,19 @@ export const UserProvider: React.FC<ProviderProps> = ({ children }) => {
     >
       {children}
       {subscriptionExpired && <ModalSubscription />}
+
+      {showWithdraw && (
+        <Withdraw
+          setShowWithdraw={setShowWithdraw}
+          showWithdraw={showWithdraw}
+          setIsLoading={setIsLoading}
+          showError={showError}
+          showSuccess={showSuccess}
+          user={user}
+          balance={balance}
+          setBalance={setBalance}
+        />
+      )}
     </UserContext.Provider>
   )
 }

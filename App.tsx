@@ -2,7 +2,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import NewServices from './src/pages/NewServices'
 import Chat from './src/pages/Chat'
-import FinishedServices from './src/pages/FinishedServices'
 import Password from './src/pages/Password'
 import Profile from './src/pages/Profile'
 import Signin from './src/pages/Signin'
@@ -41,9 +40,6 @@ const screenOptions = (route: any, color: any) => {
     case 'Home':
       iconName = 'home'
       break
-    case 'Finished':
-      iconName = 'checkcircleo'
-      break
     case 'In progress':
       iconName = 'playcircleo'
       break
@@ -78,7 +74,6 @@ function Home() {
     >
       <Tab.Screen name="Home" component={NewServices} />
       <Tab.Screen name="In progress" component={ProgressServices} />
-      <Tab.Screen name="Finished" component={FinishedServices} />
       <Tab.Screen name="Wallet" component={Wallet} />
     </Tab.Navigator>
   )

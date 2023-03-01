@@ -4,6 +4,7 @@ import Pusher from 'pusher-js/react-native'
 import RefuseOrder from '../components/Modals/RefuseOrder'
 import CancelOrder from '../components/Modals/CancelOrder'
 import FinishOrder from '../components/Modals/FinishOrder'
+import Withdraw from '../components/Modals/Withdraw'
 
 export interface RefuseAndCancel {
   code: string
@@ -37,8 +38,6 @@ interface ContextProps {
   setShowFinish: React.Dispatch<
     React.SetStateAction<RefuseAndCancel | undefined>
   >
-  showWithdraw: boolean
-  setShowWithdraw: React.Dispatch<React.SetStateAction<boolean>>
   toast: ToastProps
   clearToast: Function
   showSuccess(message: string): void
@@ -62,7 +61,6 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
   const [showRefuse, setShowRefuse] = useState<RefuseAndCancel | undefined>()
   const [showCancel, setShowCancel] = useState<RefuseAndCancel | undefined>()
   const [showFinish, setShowFinish] = useState<RefuseAndCancel | undefined>()
-  const [showWithdraw, setShowWithdraw] = useState<boolean>(false)
 
   const [toast, setToast] = useState<ToastProps>({
     type: null,
@@ -122,8 +120,6 @@ export const GeneralProvider: React.FC<ProviderProps> = ({ children }) => {
         setShowCancel,
         showFinish,
         setShowFinish,
-        showWithdraw,
-        setShowWithdraw,
         toast,
         clearToast,
         showSuccess,
