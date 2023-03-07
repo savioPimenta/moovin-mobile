@@ -20,26 +20,24 @@ const ReceiptsList: React.FC = () => {
   const [orderLoading, setOrderLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [pageNumber, setPageNumber] = useState<number>()
-  
 
   const [response, setResponse] = useState<getNewOrders[] | undefined>()
-
-  const handlePagination = (fn: 'next' | 'back' | number) => {
-    if (fn === 'next') {
-      setPage(page + 1)
-    } else if (fn === 'back') {
-      setPage(page - 1)
-    } else {
-      setPage(fn)
-    }
-  }
 
   const handleGetData = async (page: number) => {
     setOrderLoading(true)
     try {
       const { orders, pages } = await getReceipts(page)
       pages && setPageNumber(pages)
-      setResponse(orders)
+      const newResp = response || []
+      const obj = [...newResp, ...orders].filter(
+        (value, index, self) =>
+          index ===
+          self.findIndex( 
+            (t) => t.code === value.code && t.id === value.id
+          )
+      )
+      
+      setResponse(obj.length > 0 ? obj : undefined)
     } catch (error) {
       showError(error)
     }
@@ -58,12 +56,9 @@ const ReceiptsList: React.FC = () => {
   }
 
   useEffect(() => {
+    handleGetData(1)
     handleGetBalance()
   }, [])
-
-  useEffect(() => {
-    handleGetData(page)
-  }, [page])
 
   const currenceComponent = () => {
     return (
@@ -113,6 +108,14 @@ const ReceiptsList: React.FC = () => {
           progressViewOffset={60}
         />
       }
+      onEndReached={() => {
+        if (pageNumber && page < pageNumber) {
+          const newPage = page + 1
+          handleGetData(newPage)
+          setPage(newPage)
+        }
+      }}
+      onEndReachedThreshold={1}
       contentContainerStyle={[{ alignItems: 'stretch' }]}
       data={response && response.length > 0 ? response : [{ isEmpty: true }]}
       renderItem={({ item, index }: { item: any; index: number }) => {
