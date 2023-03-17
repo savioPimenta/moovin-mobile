@@ -12,8 +12,6 @@ import { colors } from '../../lib/colors'
 import { editUserData } from '../../services/auth'
 import { convertoToFormdata, dateFormatter, objDiff } from './helpers'
 
-import * as FileSystem from 'expo-file-system'
-
 import * as S from './styles'
 import {
   convertDate,
