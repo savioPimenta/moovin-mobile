@@ -24,6 +24,7 @@
     },
     "android": {
       "package": "br.com.specterlabs.moovin",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -31,6 +32,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "dabbb4e1-b0f7-4c94-89db-f1156896840f"
+      }
     }
   }
 }

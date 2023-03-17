@@ -89,7 +89,8 @@ export const UserProvider: React.FC<ProviderProps> = ({ children }) => {
   const login = async (email: string, pass: string) => {
     try {
       setIsLoading(true)
-      const response = await authService.login(email, pass)
+      const expo_id = await AsyncStorage.getItem('@Moovin:expo_id')
+      const response = await authService.login(email, pass, expo_id || undefined)
       setIsLoading(false)
 
       if (response.status === 200) {

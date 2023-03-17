@@ -143,7 +143,7 @@ const Chat: React.FC<ChatComponentProps> = ({ route }) => {
                       marginTop: 16,
                     }}
                   >
-                    {item.sender === 2 && <View style={{ width: 32 }} />}
+                    {item.sender === 2 && <View style={{ flex: 1 }} />}
                     <S.Message key={i} partner={item.sender === 1}>
                       <MyText
                         style={item.sender === 1 && { color: colors.dark2 }}
@@ -151,7 +151,7 @@ const Chat: React.FC<ChatComponentProps> = ({ route }) => {
                         {item.message}
                       </MyText>
                     </S.Message>
-                    {item.sender === 1 && <View style={{ width: 32 }} />}
+                    {item.sender === 1 && <View style={{ flex: 1 }} />}
                   </View>
                 )
               })}

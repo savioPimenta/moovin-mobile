@@ -32,9 +32,10 @@ export const Message = styled.View<MessageProps>`
   display: flex;
   /* width: fit-content; */
   padding: 8px 16px;
-  border-radius: 400px;
+  border-radius: 10px;
   text-align: right;
-  margin-left: auto;
+  margin-left: 32px;
+  margin-right: 0;
   background: ${colors.primary};
 
   ${(props) =>
@@ -43,6 +44,7 @@ export const Message = styled.View<MessageProps>`
     background: ${colors.white};
     text-align: left;
     margin-left: 0;
+    margin-right: 32px;
   `}
 `
 

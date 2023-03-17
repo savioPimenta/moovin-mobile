@@ -5,12 +5,14 @@ import { AxiosResponse } from 'axios'
 
 export const login = async (
   email: string,
-  password: string
+  password: string,
+  expo_id?: string
 ): Promise<AxiosResponse> => {
   try {
     const response = await api.post('/auth/signin', {
       email,
       password,
+      expo_id
     })
 
     // api.defaults.headers.Authorization = 'Bearer ' + response.data.token

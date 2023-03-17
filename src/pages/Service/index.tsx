@@ -109,9 +109,8 @@ const Service: React.FC<ServiceProps> = ({ route }) => {
               <S.FurnitureList>
                 {response?.furnitures.map((item, i) => {
                   const actualFurniture = furnitureItems.find(
-                    (e) => e.id === item.id
+                    (e) => e.id === item.furnitureId
                   )
-
                   return (
                     <S.FurnitureContainer key={i}>
                       <S.FurnitureContent>
@@ -226,7 +225,7 @@ const Service: React.FC<ServiceProps> = ({ route }) => {
               navigate.dispatch(
                 StackActions.push('chat', {
                   id: response.id,
-                  customerId: response.customerId
+                  customerId: response.customerId,
                 })
               )
             }

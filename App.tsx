@@ -29,6 +29,7 @@ import { OrdersProvider } from './src/contexts/orderContext'
 import ProgressServices from './src/pages/ProgressServices'
 import CustomDefaultHeader from './src/components/CustomDefaultHeader'
 import Toast from './src/components/Toast'
+import NotificationWrapper from './src/components/NotificationWrapper'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -95,61 +96,63 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <GeneralProvider>
-          <UserProvider>
-            <OrdersProvider>
-              <Stack.Navigator initialRouteName="loading">
-                <Stack.Screen
-                  name="signin"
-                  component={Signin}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="pass"
-                  component={Password}
-                  options={{ headerShown: false }}
-                />
+          <NotificationWrapper>
+            <UserProvider>
+              <OrdersProvider>
+                <Stack.Navigator initialRouteName="loading">
+                  <Stack.Screen
+                    name="signin"
+                    component={Signin}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="pass"
+                    component={Password}
+                    options={{ headerShown: false }}
+                  />
 
-                <Stack.Screen
-                  name="chat"
-                  component={Chat}
-                  options={{
-                    headerTitle: 'Chat',
-                    header: (props) => <CustomDefaultHeader props={props} />,
-                  }}
-                />
-                <Stack.Screen
-                  name="profile"
-                  component={Profile}
-                  options={{
-                    headerTitle: 'Profile',
-                    header: (props) => <CustomDefaultHeader props={props} />,
-                  }}
-                />
+                  <Stack.Screen
+                    name="chat"
+                    component={Chat}
+                    options={{
+                      headerTitle: 'Chat',
+                      header: (props) => <CustomDefaultHeader props={props} />,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="profile"
+                    component={Profile}
+                    options={{
+                      headerTitle: 'Profile',
+                      header: (props) => <CustomDefaultHeader props={props} />,
+                    }}
+                  />
 
-                <Stack.Screen
-                  name="home"
-                  component={Home}
-                  options={{ headerShown: false }}
-                />
+                  <Stack.Screen
+                    name="home"
+                    component={Home}
+                    options={{ headerShown: false }}
+                  />
 
-                <Stack.Screen
-                  name="service"
-                  component={Service}
-                  options={{
-                    headerTitle: 'View order',
-                    header: (props) => <CustomDefaultHeader props={props} />,
-                  }}
-                />
+                  <Stack.Screen
+                    name="service"
+                    component={Service}
+                    options={{
+                      headerTitle: 'View order',
+                      header: (props) => <CustomDefaultHeader props={props} />,
+                    }}
+                  />
 
-                <Stack.Screen
-                  name="loading"
-                  component={Loading}
-                  options={{ headerShown: false }}
-                />
-              </Stack.Navigator>
-              <Toast />
-            </OrdersProvider>
-          </UserProvider>
+                  <Stack.Screen
+                    name="loading"
+                    component={Loading}
+                    options={{ headerShown: false }}
+                  />
+                </Stack.Navigator>
+                <Toast />
+              </OrdersProvider>
+            </UserProvider>
+          </NotificationWrapper>
         </GeneralProvider>
       </NavigationContainer>
     </SafeAreaProvider>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "319703573248",
+    "project_id": "moovin-370816",
+    "storage_bucket": "moovin-370816.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319703573248:android:2e092cf54f0bda46cdc9e5",
+        "android_client_info": {
+          "package_name": "br.com.specterlabs.moovin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319703573248-fos52g3esb1j054vkna6kc1a5vqt3fq8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApEFyUJv6fMIYY-K_hj_Mv97G4UG3ZcVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "319703573248-fos52g3esb1j054vkna6kc1a5vqt3fq8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
