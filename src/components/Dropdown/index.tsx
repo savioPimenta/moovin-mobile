@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Keyboard, Platform, View } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import Icon from '@expo/vector-icons/FontAwesome5'
 import * as S from './styles'
 import { colors } from '../../lib/colors'
+import MyText from '../Text'
 
 interface DropdownProps {
   itemList: {
@@ -11,10 +12,12 @@ interface DropdownProps {
     label: string
   }[]
   placeholder?: string
-  value: string | undefined
-  setValue: React.Dispatch<React.SetStateAction<string | undefined>>
+  value: string | null
+  setValue: React.Dispatch<React.SetStateAction<string | null>>
   order: number
   orderInverse: number
+  label?: string
+  withBg?: boolean
 }
 
 const shadow = {
@@ -32,9 +35,16 @@ const Dropdown: React.FC<DropdownProps> = ({
   setValue,
   order,
   orderInverse,
+  label,
+  withBg,
 }) => {
   const [open, setOpen] = useState(false)
   const [items, setItems] = useState(itemList)
+  const [internalValue, setInternalValue] = useState(value)
+
+  useEffect(() => {
+    setInternalValue(value)
+  }, [value])
 
   return (
     <View
@@ -42,7 +52,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         {
           maxWidth: '100%',
           position: 'relative',
-          height: 57,
+          height: label && withBg ? 71.5 : 57,
           overflow: 'visible',
           flex: 1,
         },
@@ -50,14 +60,20 @@ const Dropdown: React.FC<DropdownProps> = ({
       ]}
     >
       <S.BgInput opened={open} />
+      {label && (
+        <MyText style={{ marginBottom: 6, fontSize: 14, color: colors.dark2 }}>
+          {label}
+        </MyText>
+      )}
       <DropDownPicker
         open={open}
-        value={value || null}
+        value={internalValue || null}
         items={items}
         listMode={'SCROLLVIEW'}
         mode="SIMPLE"
         setOpen={setOpen}
-        setValue={setValue}
+        setValue={setInternalValue}
+        onChangeValue={(v) => setValue(v)}
         setItems={setItems}
         placeholder={placeholder || 'Selecione um item...'}
         zIndex={1000 * order}
@@ -70,11 +86,11 @@ const Dropdown: React.FC<DropdownProps> = ({
         )}
         showTickIcon={false}
         style={{
-          backgroundColor: colors.white,
-          borderColor: 'transparent',
+          backgroundColor: withBg ? colors.dark4 : colors.white,
+          borderColor: withBg ? 'rgb(230, 234, 241)' : 'transparent',
           borderRadius: 8,
           paddingHorizontal: 16,
-          height: 55,
+          height: label && withBg ? 46 : 55,
         }}
         labelStyle={{
           fontFamily: 'Poppins_400Regular',

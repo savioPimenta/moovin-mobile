@@ -36,6 +36,7 @@ export interface User {
 
 interface ContextProps {
   user: User | null | undefined
+  getUser: () => Promise<any>
   userLoaded: boolean
   setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>
   showWithdraw: boolean
@@ -154,6 +155,7 @@ export const UserProvider: React.FC<ProviderProps> = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
+        getUser,
         userLoaded,
         setUser,
         showWithdraw,

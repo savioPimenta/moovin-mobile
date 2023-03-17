@@ -17,7 +17,6 @@ api.interceptors.response.use(
   async function (error: AxiosError) {
     if (error?.response?.status === 401) {
       await AsyncStorage.removeItem('@Moovin:token')
-      // console.log(error.request)
       delete api.defaults.headers.common.Authorization
     }
     return Promise.reject(error)

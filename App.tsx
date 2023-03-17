@@ -120,7 +120,10 @@ export default function App() {
                 <Stack.Screen
                   name="profile"
                   component={Profile}
-                  options={{ headerShown: false }}
+                  options={{
+                    headerTitle: 'Profile',
+                    header: (props) => <CustomDefaultHeader props={props} />,
+                  }}
                 />
 
                 <Stack.Screen

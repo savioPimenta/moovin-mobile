@@ -2,15 +2,19 @@ import React, { useState } from 'react'
 import { Pressable, TextInput, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import { colors } from '../../lib/colors'
+import MyText from '../Text'
 
 // import { Container } from './styles';
 
 interface InputProps {
   value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
+  setValue: (v: string) => any
   placeholder?: string
   isPassword?: boolean
   isEmail?: boolean
+  error?: string
+  label?: string
+  withBg?: boolean
 }
 
 const Input: React.FC<InputProps> = ({
@@ -18,7 +22,10 @@ const Input: React.FC<InputProps> = ({
   setValue,
   placeholder,
   isPassword,
-  isEmail
+  isEmail,
+  error,
+  label,
+  withBg,
 }) => {
   const [visible, setVisible] = useState(false)
   return (
@@ -28,22 +35,26 @@ const Input: React.FC<InputProps> = ({
         justifyContent: 'center',
       }}
     >
+      {label && (
+        <MyText style={{ marginBottom: 6, fontSize: 14, color: colors.dark2 }}>{label}</MyText>
+      )}
       <TextInput
         value={value}
         onChangeText={setValue}
         secureTextEntry={isPassword === true && !visible}
         placeholder={placeholder}
         autoCapitalize="none"
-        placeholderTextColor={colors.dark3}
+        placeholderTextColor={withBg ? colors.dark2 : colors.dark3}
         keyboardType={isEmail ? 'email-address' : 'default'}
         style={{
           fontFamily: 'Poppins_400Regular',
           paddingHorizontal: 16,
           paddingVertical: 14,
           borderRadius: 8,
-          color: colors.white,
-          borderColor: colors.white,
+          color: withBg ? colors.dark1 : colors.white,
+          borderColor: withBg ? 'rgb(230, 234, 241)' : colors.white,
           borderWidth: 1,
+          backgroundColor: withBg ? colors.dark4 : 'transparent',
         }}
       />
       {isPassword && (

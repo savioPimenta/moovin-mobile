@@ -43,3 +43,10 @@ export const resetPassword = async (
   })
   return response
 }
+
+export const editUserData = async (user: FormData) => {
+  const response = await api.patch('/users', user, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+  return response
+}

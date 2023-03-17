@@ -9,13 +9,15 @@ interface ButtonProps {
   colorScheme?: 1 | 2
   children?: any
   onPress?: any
+  disabled?: boolean
 }
 
-const Button: React.FC<ButtonProps> = ({ colorScheme, children, onPress }) => {
+const Button: React.FC<ButtonProps> = ({ colorScheme, children, onPress, disabled }) => {
   return (
     <View
       style={{
         width: '100%',
+        opacity: disabled ? 0.5 : 1
       }}
     >
       <Pressable
