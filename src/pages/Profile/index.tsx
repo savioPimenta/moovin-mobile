@@ -1,4 +1,5 @@
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
+import brLocale from 'date-fns/locale/pt-BR'
 import { DocumentResult } from 'expo-document-picker'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, View } from 'react-native'
@@ -134,8 +135,9 @@ const Profile: React.FC = () => {
   useEffect(() => {
     if (user) {
       const obj = user as Partial<User>
-      if (obj.birthDate) {
-        obj.birthDate = format(new Date(obj.birthDate), 'dd/MM/yyyy')
+      if (obj.birthDate && obj.birthDate.toString().length > 10) {
+        const newD = obj.birthDate.toString().split('T')[0].split('-')
+        obj.birthDate = newD[2] + '/' + newD[1] + '/' + newD[0]
       }
       delete obj.role
       delete obj.passResetExpiration
@@ -272,7 +274,10 @@ const Profile: React.FC = () => {
         />
         <View style={{ height: 16 }} />
         <Button
-          disabled={verifyDisabled(error, data) || Object.keys(objDiff(initialData, data)).length <= 0}
+          disabled={
+            verifyDisabled(error, data) ||
+            Object.keys(objDiff(initialData, data)).length <= 0
+          }
           onPress={() => {
             handleSendData()
           }}

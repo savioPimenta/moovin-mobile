@@ -70,7 +70,7 @@ const Toast: React.FC = () => {
     <View style={[{}, { ...zIndex(100) }]}>
       <StatusBar
         barStyle="light-content"
-        backgroundColor={'#FFF'}
+        backgroundColor={colors.primary}
         translucent={true}
       />
       <Animated.View

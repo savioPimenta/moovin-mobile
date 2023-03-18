@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { RefreshControl, View } from 'react-native'
 import { getNewOrders, useOrders } from '../../contexts/orderContext'
 
@@ -21,11 +21,20 @@ const ServiceList: React.FC<ServiceListProps> = ({ type }) => {
     orderLoading,
     handleGetData,
   } = useOrders()
+
+  const [allowScroll, setAllowScroll] = useState(true)
+
   return (
     <S.ServicesList
       refreshControl={
-        <RefreshControl refreshing={orderLoading} onRefresh={handleGetData} progressViewOffset={60}/>
+        <RefreshControl
+          refreshing={orderLoading}
+          onRefresh={handleGetData}
+          progressViewOffset={60}
+        />
       }
+      nestedScrollEnabled
+      scrollEnabled={true}
       contentContainerStyle={[
         { alignItems: 'stretch' },
         type !== 'newOrders' && { paddingTop: '15%' },
@@ -57,7 +66,10 @@ const ServiceList: React.FC<ServiceListProps> = ({ type }) => {
                 />
               </S.FilterContainer>
             )}
-            <ServiceCard item={item as getNewOrders} type={type === 'finishedOrders' ? 3 : type === 'myOrders' ? 2 : 1} />
+            <ServiceCard
+              item={item as getNewOrders}
+              type={type === 'finishedOrders' ? 3 : type === 'myOrders' ? 2 : 1}
+            />
           </>
         )
       }}

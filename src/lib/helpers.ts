@@ -1,3 +1,6 @@
+import 'intl';
+import 'intl/locale-data/jsonp/en-IE'; 
+
 export const checkExpired = (date: string): boolean => {
   const newDate = new Date(date)
   if (newDate <= new Date()) {

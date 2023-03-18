@@ -17,7 +17,7 @@ const NewServices: React.FC = () => {
       {orders?.newOrders.length > 0 ? (
         <ServiceList type="newOrders" />
       ) : (
-        <NoOrders />
+        <NoOrders isHome />
       )}
     </S.Container>
   )

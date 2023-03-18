@@ -1,23 +1,27 @@
 import { BlurView } from 'expo-blur'
 import AnimatedLottieView from 'lottie-react-native'
 import React, { useRef } from 'react'
-import {
-  RefreshControl,
-  ScrollView,
-  View,
-} from 'react-native'
+import { RefreshControl, ScrollView, View } from 'react-native'
 import NoOrdersAnimation from '../../../assets/no-orders.json'
 import { useOrders } from '../../contexts/orderContext'
 import { colors } from '../../lib/colors'
 import MyText from '../Text'
+import * as S from '../../components/ServiceList/styles'
+import Dropdown from '../Dropdown'
+import { orderByItems, regionItems } from '../ServiceList/statics'
 
-const NoOrders: React.FC = () => {
+interface NoOrdersProps {
+  isHome?: boolean
+}
+
+const NoOrders: React.FC<NoOrdersProps> = ({ isHome }) => {
   const lottieViewRef = useRef<AnimatedLottieView>(null)
-  const { orderLoading, handleGetData } = useOrders()
+  const { order, setOrder, region, setRegion, orderLoading, handleGetData } =
+    useOrders()
 
   return (
     <ScrollView
-      style={{ flex: 1 }}
+      style={{ flex: 1, paddingHorizontal: 32 }}
       refreshControl={
         <RefreshControl
           refreshing={orderLoading}
@@ -29,6 +33,29 @@ const NoOrders: React.FC = () => {
         flex: 1,
       }}
     >
+      {isHome && (
+        <S.FilterContainer>
+          <Dropdown
+            itemList={regionItems}
+            placeholder="Region..."
+            value={region}
+            setValue={setRegion}
+            order={1}
+            orderInverse={2}
+            key={0}
+          />
+          <View style={{ width: 8 }} />
+          <Dropdown
+            itemList={orderByItems}
+            placeholder="Order by..."
+            value={order}
+            setValue={setOrder}
+            order={2}
+            orderInverse={1}
+            key={1}
+          />
+        </S.FilterContainer>
+      )}
       <View
         style={{
           flex: 1,
